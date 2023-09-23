@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<body style="padding-top: 0px;">
+<main layout:fragment="contenido">
+    <div class="col-12">
+        <h2>Agregar Cliente</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>
+        <form th:object="${cliente}" th:action="@{/clientes/agregar}" method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre del cliente</label>
+                <input autocomplete="off" autofocus th:field="*{nombre}" id="nombre"
+                       placeholder="Escribe el nombre del cliente" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{nombre}"></div>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido del cliente</label>
+                <input autocomplete="off" autofocus th:field="*{apellido}" id="apellido"
+                       placeholder="Escribe el apellido del cliente" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('apellido')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{apellido}"></div>
+            </div>
+            <div class="form-group">
+                <label for="numeroDocumento">Numero documento</label>
+                <input autocomplete="off" autofocus th:field="*{numeroDocumento}" id="numeroDocumento"
+                       placeholder="Escribe el numero de documento del cliente" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('numeroDocumento')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{numeroDocumento}"></div>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Telefono</label>
+                <input autocomplete="off" autofocus th:field="*{telefono}" id="telefono"
+                       placeholder="Escribe el numero de telefono del cliente" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{telefono}"></div>
+            </div>
+            <div class="form-group">
+                <label for="fechaCumpleanos">Fecha de Cumpleaños</label>
+                <input autocomplete="off" autofocus th:field="*{fechaCumpleanos}" id="fechaCumpleanos"
+                       pattern="yyyy-MM-dd" type="date"
+                       class="form-control" th:classappend="${#fields.hasErrors('fechaCumpleanos')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{fechaCumpleanos}"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input autocomplete="off" autofocus th:field="*{email}" id="email"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{email}"></div>
+            </div>
+            <div class="form-group">
+                <label>Tiene Cta Cte</label>
+                <input type="checkbox" th:field="*{cuentaCorriente}" th:value="${cliente.cuentaCorriente}">
+            </div>
+            <div class="form-group">
+                <label>Estado</label>
+                <select class="form-control" id="dropDownList" th:field="*{estado}">
+                    <option value="0">Elija una estado</option>
+                    <option th:each="estado : ${estados}" th:value="${estado}" th:text="${estado}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Activo</label>
+                <input type="checkbox" th:field="*{activo}" th:value="${cliente.activo}">
+            </div>
+            <br>
+            <br>
+
+            <button class="btn btn-success" type="submit">Guardar</button>
+            &nbsp;<a class="btn btn-warning" th:href="@{/clientes/mostrar}">Ver todos</a>
+        </form>
+    </div>
+</main>
+</body>
+</html>

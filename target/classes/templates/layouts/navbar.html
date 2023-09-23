@@ -1,0 +1,136 @@
+<nav th:fragment="navbar" xmlns:th="http://www.w3.org/1999/xhtml"
+     class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <li class="nav-item">
+        <a class="navbar-brand" target="_blank" href="//google.com">Sistema de ventas</a>
+    </li>
+    <button class="navbar-toggler" type="button" id="botonMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+
+        <ul class="navbar-nav mr-auto">
+            <li class="dropdown" th:if="${role == 'VENDER' || role == 'VENDERPRO' || role == 'ADMIN'}">
+                <a style="margin-right:20px;color: white;" href="#" class="dropdown-toggle" data-toggle="dropdown">Ventas</a>
+                <ul class="dropdown-menu" style="background-color: slategray;">
+                    <li><a class="nav-link" style="color: white;" th:href="@{/vender/}">Vender</a></li>
+                    <li><a class="nav-link" style="color: white;" th:href="@{/ventaspublico/}">Mis Ventas</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}">Ver Ventas Historicas</a></li>
+                </ul>
+            </li>
+            <li class="dropdown" th:if="${role == 'VENDER' || role == 'VENDERPRO' || role == 'ADMIN'}">
+                <a style="margin-right:20px;color: white;" href="#" class="dropdown-toggle" data-toggle="dropdown">Productos</a>
+                <ul class="dropdown-menu" style="background-color: slategray;">
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'VENDER' || role == 'VENDERPRO'}" th:href="@{/productospublicos/mostrar}">Stock Publico</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}" th:href="@{/productos/mostrar}">Stock Privado</a></li>
+                    <li><a class="nav-link" style="color: white;" th:href="@{/notificacionespublico/}">Notificaciones</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}" th:href="@{/pedidossugeridos/}">Pedidos</a></li>
+                </ul>
+            </li>
+            <li class="dropdown" th:if="${role == 'VENDER' || role == 'VENDERPRO' || role == 'ADMIN'}">
+                <a style="margin-right:20px;color: white;" href="#" class="dropdown-toggle" data-toggle="dropdown">Proveedores</a>
+                <ul class="dropdown-menu" style="background-color: slategray;">
+                    <li><a class="nav-link" style="color: white;" th:href="@{/proveedores/}">Mis Proveedores</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}" th:href="@{/pagoproveedores/}">Pago Proveedores</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}">Pago Proveedores Historicos</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}">Estadisticas de Pago</a></li>
+                </ul>
+            </li>
+            <li class="dropdown" th:if="${role == 'VENDER' || role == 'VENDERPRO' || role == 'ADMIN'}">
+                <a style="margin-right:20px;color: white;" href="#" class="dropdown-toggle" data-toggle="dropdown">Cuentas Corrientes</a>
+                <ul class="dropdown-menu" style="background-color: slategray;">
+                    <li><a class="nav-link" style="color: white;" th:href="@{/cuentascorrientes/}">Ver Cuentas</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}" th:href="@{/cuentascorrientes/cancelar}">Cancelar Ctas Ctes</a></li>
+                </ul>
+            </li>
+            <li class="dropdown" th:if="${role == 'VENDER' || role == 'VENDERPRO' || role == 'ADMIN'}">
+                <a style="margin-right:20px;color: white;" href="#" class="dropdown-toggle" data-toggle="dropdown">Clientes</a>
+                <ul class="dropdown-menu" style="background-color: slategray;">
+                    <li><a class="nav-link" style="color: white;" th:href="@{/clientes/mostrar}">Mis Clientes</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}">Estadisticas de Clientes</a></li>
+                </ul>
+            </li>
+            <li class="dropdown" th:if="${role == 'VENDER' || role == 'VENDERPRO' || role == 'ADMIN'}">
+                <a style="margin-right:20px;color: white;" href="#" class="dropdown-toggle" data-toggle="dropdown">Caja</a>
+                <ul class="dropdown-menu" style="background-color: slategray;">
+                    <li><a class="nav-link" style="color: white;" th:href="@{/cierrecajapublico/mostrar}">Cierre de Caja</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}" th:href="@{/cierrecajapublico/mostrar7dias}">Control de Cajas</a></li>
+                    <li><a class="nav-link" style="color: white;" th:href="@{/egresoscajachica/}">Egreso Caja Chica</a></li>
+                </ul>
+            </li>
+            <li class="dropdown" th:if="${role == 'ADMIN'}">
+                <a style="margin-right:20px;color: white;" href="#" class="dropdown-toggle" data-toggle="dropdown">Caja Fuerte</a>
+                <ul class="dropdown-menu" style="background-color: slategray;">
+                    <li><a class="nav-link" style="color: white;" th:href="@{/ingresoscajafuerte/}">Ingreso Caja Fuerte</a></li>
+                    <li><a class="nav-link" style="color: white;" th:href="@{/ventas/}">Mis Estadisticas</a></li>
+                </ul>
+            </li>
+            <li class="dropdown" th:if="${role == 'ADMIN'}">
+                <a style="margin-right:20px;color: white;" href="#" class="dropdown-toggle" data-toggle="dropdown">Códigos</a>
+                <ul class="dropdown-menu" style="background-color: slategray;">
+                    <li><a class="nav-link" style="color: white;" th:href="@{/codigos/}">Ver códigos</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <!--
+
+
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/vender/}">Vender</a>
+            </li>
+            <li th:if="${role == 'ADMIN' || role == 'VENDERPRO'}" class="nav-item">
+                <a class="nav-link" th:href="@{/productos/mostrar}">Stock Porductos Privados</a>
+            </li>
+            <li th:if="${role == 'VENDER'}" class="nav-item">
+                <a class="nav-link" th:href="@{/productospublicos/mostrar}">Stock de Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ventaspublico/}">Mis Ventas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cierrecajapublico/mostrar}">Cierre de Caja</a>
+            </li>
+            <li th:if="${role == 'ADMIN'}" class="nav-item">
+                <a class="nav-link" th:href="@{/ventas/}">Mis Estadisticas</a>
+            </li>
+            <li th:if="${role == 'ADMIN'}" class="nav-item">
+                <a class="nav-link" th:href="@{/cierrecajapublico/mostrar7dias}">Control de Cajas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cuentascorrientes/}">Cuentas Corrientes</a>
+            </li>
+            <li th:if="${role == 'ADMIN'}" class="nav-item">
+                <a class="nav-link" th:href="@{/cuentascorrientes/cancelar}">Cancelar Ctas Ctes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/egresoscajachica/}">Egreso Caja Chica</a>
+            </li>
+            <li th:if="${role == 'ADMIN'}" class="nav-item">
+                <a class="nav-link" th:href="@{/ingresoscajafuerte/}">Ingreso Caja Fuerte</a>
+            </li>
+            <li th:if="${role == 'ADMIN'}" class="nav-item">
+                <a class="nav-link" th:href="@{/pagoproveedores/}">Pago Proveedores</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/notificacionespublico/}">Notificaciones</a>
+            </li>
+            <li th:if="${role == 'ADMIN'}" class="nav-item">
+                <a class="nav-link" th:href="@{/pedidossugeridos/}">Pedidos</a>
+            </li>
+            <li th:if="${role == 'ADMIN' || role == 'VENDERPRO'}" class="nav-item">
+                <a class="nav-link" th:href="@{/proveedores/}">Mis Proveedores</a>
+            </li>
+        </ul>-->
+    </div>
+    <div style="margin-right: 10px; color: white;">
+                Usuario: <span th:text="${userName}"></span>
+    </div>
+
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Cerrar sesión
+        </button>
+    </form>
+</nav>
