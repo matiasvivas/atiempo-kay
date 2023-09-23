@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<body style="padding-top: 0px;">
+<main layout:fragment="contenido">
+    <div class="col-12">
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>
+
+        <style>
+            #contenedor {
+float: left;
+width: 804px;
+}
+
+#tabla1, #tabla2 {
+float: left;
+width: 400px;
+}
+
+#tabla1 table, #tabla2 table {
+text-align: center;
+}
+
+#tabla1 table tr td, #tabla2 table tr td {
+width: 100px
+}
+
+.altura{
+height:50px;
+text-align: center;
+}
+        </style>
+        <script>
+
+        </script>
+        <h2>Control de Cajas</h2>
+
+        <form th:object="${cierreCaja}" th:action="@{/cierrecajapublico/mostrar7dias}" method="get">
+            <div id="contenedor" class="table-responsive">
+                <table id="tabla1" class="table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="altura">Fecha y Hora</th>
+                        <th class="altura">Usuario</th>
+                        <th class="altura">Monto neto</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cierre : ${cierreCaja}">
+                        <td class="altura" th:text="${cierre.fechaYHora}"></td>
+                        <td class="altura" th:text="${cierre.username}"></td>
+                        <td class="altura" th:text="${cierre.monto}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table id="tabla2" class="table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="altura">Fecha y Hora</th>
+                        <th class="altura">Username</th>
+                        <th class="altura">Efectivo S</th>
+                        <th class="altura">Digital S</th>
+                        <th class="altura">CtaCte S</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="venta : ${ventasPorCajas}">
+                        <td class="altura" th:text="${venta[0]}"></td>
+                        <td class="altura" th:text="${venta[1]}"></td>
+                        <td class="altura" th:text="${venta[2]}"></td>
+                        <td class="altura" th:text="${venta[3]}"></td>
+                        <td class="altura" th:text="${venta[4]}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

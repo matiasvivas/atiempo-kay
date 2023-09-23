@@ -1,0 +1,5 @@
+package pl.codeleak.demos.sbt.enumeradores;
+
+public enum TipoCodigo {
+    VENTAENVASE, COMPRAENVASE,DESCUENTO,RECARGO, ACTIVACIONTEST, ACTIVACIONMENSUAL, ACTIVACIONANUAL, TOKENWS
+}
