@@ -284,8 +284,64 @@ function jsRemoveWindowLoad()
                 onchange="persistirMontosDeAbajo()">
                 <div class="invalid-feedback" th:errors="*{codigo}"></div>
             </div>
+
+            <div class="form-group">
+                <label for="codigo">Buscador</label>
+                <input id="buscador"
+                       placeholder="Escribe el producto a buscar"
+                       type="text"
+                       class="form-control" oninput="filtrarProductos(this.value)">
+            </div>
+
+            <script>
+                function filtrarProductos(filterValue) {
+                    var select = document.getElementById("productoSeleccionado");
+                    var options = select.getElementsByTagName("option");
+
+                    for (var i = 0; i < options.length; i++) {
+                        var text = options[i].text.toLowerCase();
+                        var value = options[i].value;
+
+                        if (text.includes(filterValue.toLowerCase())) {
+                            options[i].style.display = "";
+                        } else {
+                            options[i].style.display = "none";
+                        }
+                    }
+                }
+            </script>
+
+            <select name="productoSeleccionado" id="productoSeleccionado" class="form-control" onchange="mostrarCodigoProducto()">
+                <option value="">Selecciona un producto</option>
+                <option th:each="producto : ${listaDeProductos}" th:value="${producto.codigo}">
+                    <span th:text="${producto.nombre} + ' ----------------------------------> ' + ${producto.precio}"></span>
+                </option>
+            </select>
+
+            <script>
+                function mostrarCodigoProducto() {
+                    // Obtén el elemento select por su ID
+                    var select = document.getElementById("productoSeleccionado");
+
+                    // Obtén la opción seleccionada
+                    var selectedOption = select.options[select.selectedIndex];
+
+                    // Obtén el valor del atributo "value" de la opción seleccionada (el código del producto)
+                    var codigoProducto = selectedOption.value;
+
+                    // Muestra el código del producto en un alert
+                    alert("Código del producto seleccionado: " + codigoProducto);
+
+                    document.getElementById("codigo").value=codigoProducto;
+                    this.persistirMontosDeAbajo();
+                    // Puedes realizar más acciones con el código del producto aquí
+                }
+            </script>
+
         </form>
 
+        <br>
+        <br>
         <!-- Iba aca Cobrar y despues total-->
 
         <div class="table-responsive">

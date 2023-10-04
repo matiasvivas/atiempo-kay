@@ -175,13 +175,15 @@ public class ProductosController {
         return "redirect:/productos/agregar";
     }
     private boolean modificacionDePrecio(Float precioActual, Float nuevoPrecio) {
-        int valor = precioActual.compareTo(nuevoPrecio);
-        if(valor!=0){
-            return true;
+        if(precioActual != null && nuevoPrecio !=null) {
+            int valor = precioActual.compareTo(nuevoPrecio);
+            if (valor != 0) {
+                return true;
+            } else { //si es igual a cero no hubo modificacion de ningun tipo en el precio
+                return false;
+            }
         }
-        else{ //si es igual a cero no hubo modificacion de ningun tipo en el precio
-            return false;
-        }
+        else{return false;}
     }
     private boolean modificacionDeStock(Float existenciaActual, Float nuevaExistencia) {
         int valor = existenciaActual.compareTo(nuevaExistencia);

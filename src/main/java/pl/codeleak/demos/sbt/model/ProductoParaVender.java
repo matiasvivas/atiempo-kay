@@ -26,6 +26,11 @@ public class ProductoParaVender extends Producto {
     }
 
     public Float getTotal() {
-        return this.getPrecio() * this.cantidad;
+        Float precio = this.getPrecio();
+        if (precio != null) {
+            return precio * this.cantidad;
+        } else {
+            return 0.0f; // O cualquier valor por defecto que desees en caso de que el precio sea nulo
+        }
     }
 }

@@ -31,4 +31,6 @@ public interface ProductosRepository extends CrudRepository<Producto, Integer> {
 
     @Query("from Producto p where p.existencia <=5 and p.prioridad = 1 order by p.nombre")
     List<Producto> obtenerProductosConBajoStockPrioridad1ParaMail();
+    @Query("from Producto p where p.existencia >0 order by p.nombre")
+    List<Producto> obtenerProductosVendibles();
 }
