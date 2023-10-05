@@ -119,7 +119,7 @@ public class CuentasCorrientesController {
 
     private Float cancelarCuentasFIFO(List<Venta> resultado, Float monto, Integer cliente) {
         Venta saldoAFavorAsiento = cuentasCorrientesRepository.obtenerSaldoAFavor(cliente);
-        Float montoTemporal = new Float(0);
+        Float montoTemporal = 0.0f;
         if(saldoAFavorAsiento!=null&&saldoAFavorAsiento.getPagoCuentaCorriente()!=null&&saldoAFavorAsiento.getPagoCuentaCorriente()>0) {
             montoTemporal = monto+saldoAFavorAsiento.getPagoCuentaCorriente();
         }

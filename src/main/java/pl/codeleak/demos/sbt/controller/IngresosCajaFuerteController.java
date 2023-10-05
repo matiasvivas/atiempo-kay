@@ -42,7 +42,7 @@ public class IngresosCajaFuerteController {
         model.addAttribute("role", role);
 
         List<CajaFuerte> cajaFuerte = ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte();
-        Float totalCajaFuerte = new Float(0);
+        Float totalCajaFuerte = 0.0f;
         if((cajaFuerte.size()>0)&&(cajaFuerte!=null)){
             totalCajaFuerte = cajaFuerte.get(0).getMonto();
         }
@@ -71,7 +71,7 @@ public class IngresosCajaFuerteController {
 
             //total caja fuerte actual
             List<CajaFuerte> cajaFuerte = ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte();
-            Float totalCajaFuerte = new Float(0);
+            Float totalCajaFuerte = 0.0f;
             Float montoActual = cajaFuerteRequest.getMonto();
             if((cajaFuerte.size()>0)&&(cajaFuerte!=null)){
                 if(cajaFuerte.get(0).getMonto()!=null){
@@ -100,7 +100,7 @@ public class IngresosCajaFuerteController {
         model.addAttribute("clase","success");
 
         List<CajaFuerte> cajaFuerte = ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte();
-        Float totalCajaFuerte = new Float(0);
+        Float totalCajaFuerte = 0.0f;
         if((cajaFuerte.size()>0)&&(cajaFuerte!=null)){
             totalCajaFuerte = cajaFuerte.get(0).getMonto();
         }

@@ -64,17 +64,17 @@ public class CierreCajaController {
 
         //agregar el monto de cierre de caja sin la apertura a Caja Fuerte
 
-        Float montoCierreCajaRequest = new Float(0);
+        Float montoCierreCajaRequest = 0.0f;;
         montoCierreCajaRequest = cierreCaja.getMonto();
         if(montoCierreCajaRequest!=null){
-            montoCierreCajaRequest=montoCierreCajaRequest-new Float(3000);
+            montoCierreCajaRequest=montoCierreCajaRequest - 3000.0f;;
         }
-        if(montoCierreCajaRequest.compareTo(new Float(0))<0){
-            montoCierreCajaRequest = new Float(0);
+        if(montoCierreCajaRequest.compareTo(0.0f)<0){
+            montoCierreCajaRequest = 0.0f;;
         }
 
         List<CajaFuerte> cajaFuerte = ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte();
-        Float totalCajaFuerte = new Float(0);
+        Float totalCajaFuerte = 0.0f;
         if((cajaFuerte.size()>0)&&(cajaFuerte!=null)){
             totalCajaFuerte = cajaFuerte.get(0).getMonto();
         }
@@ -108,12 +108,12 @@ public class CierreCajaController {
             cierreCaja = new CierreCaja();
         }
         if(cierreCaja!=null) {
-            cierreCaja.setMonto(new Float(0));
+            cierreCaja.setMonto(0.0f);
             model.addAttribute("cierreCaja", cierreCaja);
         }
         else{
             cierreCaja = new CierreCaja();
-            cierreCaja.setMonto(new Float(0));
+            cierreCaja.setMonto(0.0f);
             model.addAttribute("cierreCaja", cierreCaja);
         }
 

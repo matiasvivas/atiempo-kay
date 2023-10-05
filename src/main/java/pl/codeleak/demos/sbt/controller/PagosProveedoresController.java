@@ -121,7 +121,7 @@ public class PagosProveedoresController {
 
             PagoProveedores pagoProveedoresAModificar = pagoProveedoresRepository.obtenerpagoProveedorPorCodigo(codProveedor);
             if (pagoProveedoresAModificar != null) {
-                Float montoACancelar = new Float(0);
+                Float montoACancelar = 0.0f;
                 Float saldoPendienteEnBase = pagoProveedoresAModificar.getMontoSaldoPendiente();
                 Float entregaAcumuladaEfectivo = pagoProveedoresAModificar.getMontoEntregaEfectivo();
                 Float entregaAcumuladaDigital = pagoProveedoresAModificar.getMontoEntregaDigital();
@@ -131,19 +131,19 @@ public class PagosProveedoresController {
 
                 //Evaluacion y cerificacion
                 if (saldoPendienteEnBase == null) {
-                    saldoPendienteEnBase = new Float(0);
+                    saldoPendienteEnBase = 0.0f;
                 }
                 if (entregaAcumuladaEfectivo == null) {
-                    entregaAcumuladaEfectivo = new Float(0);
+                    entregaAcumuladaEfectivo = 0.0f;
                 }
                 if (entregaAcumuladaDigital == null) {
-                    entregaAcumuladaDigital = new Float(0);
+                    entregaAcumuladaDigital = 0.0f;
                 }
                 if (montoRequestEfectivo == null) {
-                    montoRequestEfectivo = new Float(0);
+                    montoRequestEfectivo = 0.0f;
                 }
                 if (montoRequestDigital == null) {
-                    montoRequestDigital = new Float(0);
+                    montoRequestDigital = 0.0f;
                 }
 
                 if (montoRequestEfectivo != null) {
@@ -156,13 +156,13 @@ public class PagosProveedoresController {
                 //sumar montoACancelar actual y Montos Acumulados
                 Float entregasAcumuladasEfectivoYDigital = entregaAcumuladaEfectivo + entregaAcumuladaDigital;
 
-                if (entregasAcumuladasEfectivoYDigital.compareTo(new Float(0.0)) != 0) {
+                if (entregasAcumuladasEfectivoYDigital.compareTo(0.0f) != 0) {
                     montoACancelar = montoACancelar + entregasAcumuladasEfectivoYDigital;
                 }
 
                 if (pagoProveedoresAModificar.getMontoPedido().equals(montoACancelar)) {
                     pagoProveedoresAModificar.setEstado(Estado.CANCELADO);
-                    pagoProveedoresAModificar.setMontoSaldoPendiente(new Float(0));
+                    pagoProveedoresAModificar.setMontoSaldoPendiente(0.0f);
                     pagoProveedoresAModificar.setMontoEntregaEfectivo(montoRequestEfectivo + entregaAcumuladaEfectivo);
                     pagoProveedoresAModificar.setMontoEntregaDigital(montoRequestDigital + entregaAcumuladaDigital);
                 }
@@ -175,7 +175,7 @@ public class PagosProveedoresController {
                     pagoProveedoresAModificar.setMontoEntregaDigital(montoRequestDigital + entregaAcumuladaDigital);
                 }
 
-                Float memoriaMontoSacadoCajaFuertePorDescubierto = new Float(0);
+                Float memoriaMontoSacadoCajaFuertePorDescubierto = 0.0f;
 
                 if (pagoProveedoresAModificar.getMontoPedido().compareTo(montoACancelar) < 0) {
                     Float montoSacadoDeCajaFuerte = montoACancelar - pagoProveedoresAModificar.getMontoPedido();
@@ -191,13 +191,13 @@ public class PagosProveedoresController {
                     egresosCajaRepository.save(egresosCaja);
 
                     pagoProveedoresAModificar.setEstado(Estado.CANCELADO);
-                    pagoProveedoresAModificar.setMontoSaldoPendiente(new Float(0));
+                    pagoProveedoresAModificar.setMontoSaldoPendiente(0.0f);
                     pagoProveedoresAModificar.setMontoEntregaEfectivo(montoRequestEfectivo + entregaAcumuladaEfectivo);
                     pagoProveedoresAModificar.setMontoEntregaDigital(montoRequestDigital + entregaAcumuladaDigital);
 
                     //quitar el monto sacado de caja fuerte
                     List<CajaFuerte> cajaFuerte = ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte();
-                    Float totalCajaFuerte = new Float(0);
+                    Float totalCajaFuerte = 0.0f;
                     if ((cajaFuerte.size() > 0) && (cajaFuerte != null)) {
                         totalCajaFuerte = cajaFuerte.get(0).getMonto();
                     }
@@ -216,14 +216,14 @@ public class PagosProveedoresController {
 
                 //sacar dinero de caja fuerte para pago efectivo y/o digital
                 List<CajaFuerte> cajaFuerte = ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte();
-                Float totalCajaFuerte = new Float(0);
+                Float totalCajaFuerte = 0.0f;
                 if ((cajaFuerte.size() > 0) && (cajaFuerte != null)) {
                     totalCajaFuerte = cajaFuerte.get(0).getMonto();
                 }
                 model.addAttribute("totalCajaFuerte", totalCajaFuerte);
 
                 totalCajaFuerte = totalCajaFuerte - montoRequestEfectivo;
-                if (memoriaMontoSacadoCajaFuertePorDescubierto.compareTo(new Float(0)) > 0) {
+                if (memoriaMontoSacadoCajaFuertePorDescubierto.compareTo(0.0f) > 0) {
                     totalCajaFuerte = totalCajaFuerte + memoriaMontoSacadoCajaFuertePorDescubierto;
                 }
 
@@ -258,7 +258,7 @@ public class PagosProveedoresController {
 
             Float totalEfectivoHoy = ventasRepository.mostrarTotalEfectivoHoy(fechaHoy, fechaManiana);
             Float totalEgresosHoy = egresosCajaRepository.mostrarTotalEgresosHoy(fechaHoy, fechaManiana);
-            Float totalEfectivo = new Float(0);
+            Float totalEfectivo = 0.0f;
             if (totalEfectivoHoy != null && !totalEfectivoHoy.equals(0) && !totalEfectivoHoy.equals("")) {
                 totalEfectivo = totalEfectivoHoy;
             }
@@ -268,7 +268,7 @@ public class PagosProveedoresController {
 
             Float totalDigitalHoy = ventasRepository.mostrarTotalDigitalHoy(fechaHoy, fechaManiana);
             if (totalDigitalHoy == null || totalDigitalHoy.equals(0) || totalDigitalHoy.equals("")) {
-                totalDigitalHoy = new Float(0);
+                totalDigitalHoy = 0.0f;
             }
 
             Float cajaJoha = ventasRepository.obtenerTotalVentaHoyPorUsuario(fechaHoy, fechaManiana, "Johana");
@@ -334,7 +334,7 @@ public class PagosProveedoresController {
             model.addAttribute("totalCajaFuerte", ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte());
 
             List<CajaFuerte> cajaFuerte = ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte();
-            Float totalCajaFuerte = new Float(0);
+            Float totalCajaFuerte = 0.0f;
             if ((cajaFuerte.size() > 0) && (cajaFuerte != null)) {
                 totalCajaFuerte = cajaFuerte.get(0).getMonto();
             }

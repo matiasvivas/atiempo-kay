@@ -96,12 +96,12 @@ public class VentasController {
 
         Float totalEfectivoHoy = ventasRepository.mostrarTotalEfectivoHoy(fechaHoy, fechaManiana);
         Float totalEgresosHoy = egresosCajaRepository.mostrarTotalEgresosHoy(fechaHoy, fechaManiana);
-        if(totalEfectivoHoy==null){totalEfectivoHoy=new Float(0);}
-        if(totalEgresosHoy==null){totalEgresosHoy=new Float(0);}
+        if(totalEfectivoHoy==null){totalEfectivoHoy = 0.0f;}
+        if(totalEgresosHoy==null){totalEgresosHoy = 0.0f;}
         Float totalEfectivo = totalEfectivoHoy - totalEgresosHoy;
 
         Float totalDigitalHoy = ventasRepository.mostrarTotalDigitalHoy(fechaHoy, fechaManiana);
-        if(totalDigitalHoy==null){totalDigitalHoy=new Float(0);}
+        if(totalDigitalHoy==null){totalDigitalHoy = 0.0f;}
 
         Float cajaJoha = ventasRepository.obtenerTotalVentaHoyPorUsuario(fechaHoy, fechaManiana,"Johana");
         Float cajaAlexia = ventasRepository.obtenerTotalVentaHoyPorUsuario(fechaHoy, fechaManiana,"Alexia");
@@ -109,11 +109,11 @@ public class VentasController {
         Float cajaSol = ventasRepository.obtenerTotalVentaHoyPorUsuario(fechaHoy, fechaManiana,"smartinez");
         Float cajaMati = ventasRepository.obtenerTotalVentaHoyPorUsuario(fechaHoy, fechaManiana,"mvivas");
 
-        if(cajaJoha==null){cajaJoha=new Float(0);}
-        if(cajaAlexia==null){cajaAlexia=new Float(0);}
-        if(cajaNicole==null){cajaNicole=new Float(0);}
-        if(cajaSol==null){cajaSol=new Float(0);}
-        if(cajaMati==null){cajaMati=new Float(0);}
+        if(cajaJoha==null){cajaJoha = 0.0f;}
+        if(cajaAlexia==null){cajaAlexia = 0.0f;}
+        if(cajaNicole==null){cajaNicole = 0.0f;}
+        if(cajaSol==null){cajaSol = 0.0f;}
+        if(cajaMati==null){cajaMati = 0.0f;}
 
         model.addAttribute("totalEfectivo", totalEfectivo);
         model.addAttribute("totalDigital", totalDigitalHoy);
@@ -130,7 +130,7 @@ public class VentasController {
         model.addAttribute("proveedoresPendientes", proveedoresProgramados);
 
         List<CajaFuerte> cajaFuerte = ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte();
-        Float totalCajaFuerte = new Float(0);
+        Float totalCajaFuerte = 0.0f;
         if((cajaFuerte.size()>0)&&(cajaFuerte!=null)){
             totalCajaFuerte = cajaFuerte.get(0).getMonto();
         }
@@ -203,12 +203,12 @@ public class VentasController {
 
         Float totalEfectivoHoy = ventasRepository.mostrarTotalEfectivoHoy(fechaHoy, fechaManiana);
         Float totalEgresosHoy = egresosCajaRepository.mostrarTotalEgresosHoy(fechaHoy, fechaManiana);
-        if(totalEfectivoHoy==null){totalEfectivoHoy=new Float(0);}
-        if(totalEgresosHoy==null){totalEgresosHoy=new Float(0);}
+        if(totalEfectivoHoy==null){totalEfectivoHoy = 0.0f;}
+        if(totalEgresosHoy==null){totalEgresosHoy = 0.0f;}
         Float totalEfectivo = totalEfectivoHoy - totalEgresosHoy;
 
         Float totalDigitalHoy = ventasRepository.mostrarTotalDigitalHoy(fechaHoy, fechaManiana);
-        if(totalDigitalHoy==null){totalDigitalHoy=new Float(0);}
+        if(totalDigitalHoy==null){totalDigitalHoy = 0.0f;}
 
         Float cajaJoha = ventasRepository.obtenerTotalVentaHoyPorUsuario(fechaHoy, fechaManiana,"Johana");
         Float cajaAlexia = ventasRepository.obtenerTotalVentaHoyPorUsuario(fechaHoy, fechaManiana,"Alexia");
@@ -216,11 +216,11 @@ public class VentasController {
         Float cajaSol = ventasRepository.obtenerTotalVentaHoyPorUsuario(fechaHoy, fechaManiana,"smartinez");
         Float cajaMati = ventasRepository.obtenerTotalVentaHoyPorUsuario(fechaHoy, fechaManiana,"mvivas");
 
-        if(cajaJoha==null){cajaJoha=new Float(0);}
-        if(cajaAlexia==null){cajaAlexia=new Float(0);}
-        if(cajaNicole==null){cajaNicole=new Float(0);}
-        if(cajaSol==null){cajaSol=new Float(0);}
-        if(cajaMati==null){cajaMati=new Float(0);}
+        if(cajaJoha==null){cajaJoha = 0.0f;}
+        if(cajaAlexia==null){cajaAlexia = 0.0f;}
+        if(cajaNicole==null){cajaNicole = 0.0f;}
+        if(cajaSol==null){cajaSol = 0.0f;}
+        if(cajaMati==null){cajaMati = 0.0f;}
 
         model.addAttribute("totalEfectivo", totalEfectivo);
         model.addAttribute("totalDigital", totalDigitalHoy);
@@ -237,7 +237,7 @@ public class VentasController {
         model.addAttribute("proveedoresPendientes", proveedoresProgramados);
 
         List<CajaFuerte> cajaFuerte = ingresosCajaFuerteRepository.mostrarMontoActualCajaFuerte();
-        Float totalCajaFuerte = new Float(0);
+        Float totalCajaFuerte = 0.0f;;
         if((cajaFuerte.size()>0)&&(cajaFuerte!=null)){
             totalCajaFuerte = cajaFuerte.get(0).getMonto();
         }
