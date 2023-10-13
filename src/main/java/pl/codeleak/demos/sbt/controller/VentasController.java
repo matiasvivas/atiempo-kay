@@ -25,7 +25,7 @@ import pl.codeleak.demos.sbt.repository.VentasRepository;
 import pl.codeleak.demos.sbt.service.UserService;
 
 @Controller
-@RequestMapping(path = "/ventas")
+@RequestMapping(path = "/ventasOLD")
 public class VentasController {
     @Autowired
     VentasRepository ventasRepository;

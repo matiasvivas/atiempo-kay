@@ -2,14 +2,11 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="master">
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
 <body style="padding-top: 0px;">
 <main layout:fragment="contenido">
-    <div class="container">
-        <h2 class="mt-4">Editar producto PRIVADO</h2>
-        <form th:object="${producto}" th:action="@{/productos/editar/} + ${producto.id}" method="post" class="needs-validation" novalidate>
+    <div class="col-12">
+        <h2>Editar producto PRIVADO</h2>
+        <form th:object="${producto}" th:action="@{/productos/editar/} + ${producto.id}" method="post">
             <input type="hidden" th:field="*{id}">
             <div class="form-group">
                 <label for="nombre">Nombre del producto</label>
@@ -33,37 +30,38 @@
                 <div class="invalid-feedback" th:errors="*{existencia}"></div>
             </div>
             <div class="form-group">
-                <label for="precio">Precio</label>
+                <label for="existencia">Precio</label>
                 <input autocomplete="off" th:field="*{precio}" id="precio" placeholder="Precio del producto"
                        type="number"
                        class="form-control" th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid' : ''">
                 <div class="invalid-feedback" th:errors="*{precio}"></div>
             </div>
+
             <div class="form-group">
-                <label for="fechaVencimiento">Fecha de vencimiento</label>
+                <label for="nombre">Fecha de vencimiento</label>
                 <input autocomplete="off" autofocus th:field="*{fechaVencimiento}" id="fechaVencimiento"
                        placeholder="Ejemplo 25/09/2023" type="text"
-                       class="form-control">
+                       class="form-control" >
             </div>
+
             <div class="form-group">
-                <label for="prioridad">Prioridad</label>
+                <label for="nombre">Prioridad</label>
                 <input autocomplete="off" th:field="*{prioridad}" id="prioridad"
                        placeholder="Defina la prioridad 1 al 5" type="number"
-                       class="form-control">
+                       class="form-control" >
             </div>
+
             <select class="form-control" id="categoria" th:field="*{categoria}">
-                <option value="0">Elija una categoría</option>
+                <option value="0">Elija una categoria</option>
                 <option th:each="categoria : ${categorias}" th:value="${categoria}" th:text="${categoria}"></option>
             </select>
             <br>
             <br>
+
             <button class="btn btn-success" type="submit">Guardar</button>
             &nbsp;<a class="btn btn-warning" th:href="@{/productos/mostrar}">Ver todos</a>
         </form>
     </div>
 </main>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

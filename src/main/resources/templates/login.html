@@ -1,30 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Sistema de ventas</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <script type="text/javascript">
-            function checkDiasRestantes(){
-            var diasRestantes = document.getElementById("idDiasRestantes").value;
-            if(diasRestantes==-1){
-                document.getElementById("ejecutarAdvertencia").click();
-                }
-           }
+    function checkDiasRestantes() {
+        var diasRestantes = document.getElementById("idDiasRestantes").value;
+        if (diasRestantes == -1) {
+            document.getElementById("ejecutarAdvertencia").click();
+        }
+    }
 </script>
 
 <script>
-    function validarCodigo(){
-           var codigoValidacion = document.getElementById("codigoValidacion").value;
-                document.getElementById("name").value=codigoValidacion;
-                document.getElementById("validarForm").submit();
-           }
+    function validarCodigo() {
+        var codigoValidacion = document.getElementById("codigoValidacion").value;
+        document.getElementById("name").value = codigoValidacion;
+        document.getElementById("validarForm").submit();
+    }
 </script>
 
 <body onload="checkDiasRestantes()">
@@ -32,8 +31,8 @@
 <input hidden id="idDiasRestantes" th:value="${diasRestantes}">
 
 <form id="validarForm" hidden th:object="${user}" class="mb-2" th:action="@{/validar}" method="post">
-    <input hidden type="text" id="name" name="name" class="form-control"/>
-    <input hidden type="text" id="email" name="email" class="form-control" th:value="${account}"/>
+    <input hidden type="text" id="name" name="name" class="form-control" />
+    <input hidden type="text" id="email" name="email" class="form-control" th:value="${account}" />
 </form>
 
 <form th:action="@{/registration}" method="get">
@@ -41,21 +40,19 @@
 </form>
 
 <div class="container">
-    <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo"/>
+    <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
     <form th:action="@{/login}" method="POST" class="form-signin">
         <h3 class="form-signin-heading" th:text="Bienvenido"></h3>
-        <br/>
+        <br />
 
-        <input type="text" id="user_name" name="user_name" placeholder="Usuario"
-               class="form-control"/> <br/>
-        <input type="password" th:placeholder="Contraseña"
-               id="password" name="password" class="form-control"/> <br/>
+        <input type="text" id="user_name" name="user_name" placeholder="Usuario" class="form-control" /> <br />
+        <input type="password" th:placeholder="Contraseña" id="password" name="password" class="form-control" />
+        <br />
 
         <div align="center" th:if="${param.error}">
             <p style="font-size: 20; color: #FF1C19;">Usuario y contraseña incorrectos, por favor verifique.</p>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
-                th:text="Login"></button>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
     </form>
 </div>
 
@@ -64,7 +61,7 @@
     <!-- Modal -->
     <div class="modal fade" id="myModalAdvertencia" role="dialog">
         <div class="modal-dialog">
-            <!-- Modal content-->
+            <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header" style="display:none;">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -83,30 +80,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <td th:text="${mensajeActivacion}"></td>
-                                <td th:text="${userName}"></td>
-                                <td><input id="codigoValidacion" placeholder="Ingrese el código"></td>
+                            <td th:text="${mensajeActivacion}"></td>
+                            <td th:text="${userName}"></td>
+                            <td><input id="codigoValidacion" placeholder="Ingrese el código"></td>
                             </tbody>
                         </table>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal" onclick="validarCodigo();">Validar</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Atras</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Atrás</button>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 </body>
+
 </html>

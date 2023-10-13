@@ -2,13 +2,10 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="master">
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
 <body style="padding-top: 0px;">
 <main layout:fragment="contenido">
-    <div class="container">
-        <h2 class="mt-4">Productos PRIVADOS</h2>
+    <div class="col-12">
+        <h2>Productos PRIVADOS</h2>
         <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
              th:text="${mensaje}"
              class="alert">
@@ -50,8 +47,5 @@
         </div>
     </div>
 </main>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
