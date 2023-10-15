@@ -131,7 +131,8 @@ public class ProductosController {
 
     @GetMapping(value = "/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable int id, Model model) {
-        model.addAttribute("producto", productosRepository.findById(id).orElse(null));
+        //model.addAttribute("producto", productosRepository.findById(id).orElse(null));
+        model.addAttribute("producto", productosRepository.findFirstById(id));
 
         model.addAttribute("categorias", Categoria.values());
 

@@ -2,6 +2,7 @@ package pl.codeleak.demos.sbt.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -33,4 +34,5 @@ public interface ProductosRepository extends CrudRepository<Producto, Integer> {
     List<Producto> obtenerProductosConBajoStockPrioridad1ParaMail();
     @Query("from Producto p where p.existencia >0 order by p.nombre")
     List<Producto> obtenerProductosVendibles();
+    Producto findFirstById(int codigo);
 }
