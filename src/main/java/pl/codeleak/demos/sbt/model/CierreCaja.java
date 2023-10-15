@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class CierreCaja {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull(message = "Debes especificar el nombre del usuario que cerro la caja")

@@ -13,7 +13,7 @@ import pl.codeleak.demos.sbt.enumeradores.Categoria;
 public class Proveedor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nombre;

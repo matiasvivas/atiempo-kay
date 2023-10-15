@@ -12,7 +12,7 @@ import pl.codeleak.demos.sbt.enumeradores.TipoCodigo;
 @Entity
 public class Codigo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String serial;
     private TipoCodigo tipo;

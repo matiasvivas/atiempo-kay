@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class ProductoVendido {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Float cantidad, precio;
     private String nombre, codigo;

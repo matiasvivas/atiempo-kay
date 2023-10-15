@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Producto {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull(message = "Debes especificar el nombre")
