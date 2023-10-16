@@ -285,7 +285,8 @@ public class VenderController {
         // Recorrer el carrito
         for (ProductoParaVender productoParaVender : carrito) {
             // Obtener el producto fresco desde la base de datos
-            Producto p = productosRepository.findById(productoParaVender.getId()).orElse(null);
+            //Producto p = productosRepository.findById(productoParaVender.getId()).orElse(null);
+            Producto p = productosRepository.findFirstById(productoParaVender.getId());
             if (p == null) continue; // Si es nulo o no existe, ignoramos el siguiente código con continue
             // Le restamos existencia
             p.restarExistencia(productoParaVender.getCantidad());
@@ -659,7 +660,8 @@ public class VenderController {
             // Recorrer el carrito
             for (ProductoParaVender productoParaVender : carrito) {
                 // Obtener el producto fresco desde la base de datos
-                Producto p = productosRepository.findById(productoParaVender.getId()).orElse(null);
+                //Producto p = productosRepository.findById(productoParaVender.getId()).orElse(null);
+                Producto p = productosRepository.findFirstById(productoParaVender.getId());
                 if (p == null) continue; // Si es nulo o no existe, ignoramos el siguiente código con continue
                 // Le restamos existencia
                 p.restarExistencia(productoParaVender.getCantidad());
