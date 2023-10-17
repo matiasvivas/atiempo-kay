@@ -13,4 +13,8 @@ INSERT INTO roles (role_id, role)
 VALUES (126338, 'ADMIN')
     ON CONFLICT (role_id) DO NOTHING;
 
+INSERT INTO roles (role_id, role)
+VALUES (423484, 'CLIENTECC')
+    ON CONFLICT (role_id) DO NOTHING;
+
 COMMIT; -- Confirmar la transacción
