@@ -146,6 +146,60 @@
         </div>
     </div>
     </div>
+
+
+    <div class="col-12">
+        <h2>Monto vendido el dia de hoy:</h2>
+        <br>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Usuario</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="venta : ${ventasMontos}">
+                    <td th:text="${venta[0]}"></td>
+                    <td th:text="${venta[1]}"></td>
+                    <td th:text="${venta[2]}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+    <div class="col-12">
+        <h2>Ventas digitales el dia de hoy:</h2>
+        <br>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Usuario</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="venta : ${ventasDigitales}">
+                    <td th:text="${venta.fechaYHora}"></td>
+                    <td th:text="${venta.pagoDigital}"></td>
+                    <td th:text="${venta.username}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
 </main>
 </body>
 </html>

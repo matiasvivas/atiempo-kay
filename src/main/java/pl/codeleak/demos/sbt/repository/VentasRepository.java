@@ -21,12 +21,13 @@ public interface VentasRepository extends CrudRepository<Venta, Integer> {
     //@Query("FROM Venta v WHERE v.fechaYHora BETWEEN CURRENT_DATE AND :today")
     public Iterable<Venta> mostrarVentas48hs(@Param("today") Date today);
 
-    @Query("SELECT DATE_TRUNC('day', v.fechaYHora), SUM(v.pagoEfectivo), v.username FROM Venta v WHERE v.fechaYHora >= :today GROUP BY DATE_TRUNC('day', v.fechaYHora), v.username")
+    //@Query("SELECT DATE_TRUNC('day', v.fechaYHora), SUM(v.pagoEfectivo), v.username FROM Venta v WHERE v.fechaYHora >= :today GROUP BY DATE_TRUNC('day', v.fechaYHora), v.username")
     //@Query("select v.fechaYHora, sum(v.pagoEfectivo), v.username from Venta v where v.fechaYHora >= :today group by day(v.fechaYHora), month(v.fechaYHora), v.username")
-    public Iterable<Venta> mostrarVentasEstadisticas48hs(@Param("today") Date today);
+    @Query("SELECT DATE_TRUNC('day', v.fechaYHora), SUM(v.pagoEfectivo), v.username FROM Venta v WHERE v.fechaYHora >= :fechaHoy and v.fechaYHora < :fechaManiana GROUP BY DATE_TRUNC('day', v.fechaYHora), v.username")
+    public Iterable<Venta> mostrarVentasEstadisticas48hs(@Param("fechaHoy") Date fechaHoy, @Param("fechaManiana") Date fechaManiana);
 
-    @Query("from Venta v where v.pagoDigital is not null and v.fechaYHora >= :today")
-    List<Venta> mostrarMontosDigitales48hs(@Param("today") Date today);
+    @Query("from Venta v where v.pagoDigital is not null and v.fechaYHora >= :fechaHoy and v.fechaYHora < :fechaManiana")
+    List<Venta> mostrarMontosDigitales48hs(@Param("fechaHoy") Date fechaHoy, @Param("fechaManiana") Date fechaManiana);
 
     @Query("select sum(v.pagoEfectivo) from Venta v where v.fechaYHora >= :fechaHoy and v.fechaYHora < :fechaManiana")
     Float mostrarTotalEfectivoHoy(@Param("fechaHoy") Date fechaHoy, @Param("fechaManiana") Date fechaManiana);
@@ -36,5 +37,8 @@ public interface VentasRepository extends CrudRepository<Venta, Integer> {
 
     @Query("select sum(v.pagoEfectivo) from Venta v where v.fechaYHora >=:fechaHoy and v.fechaYHora <:fechaManiana and v.username =:username")
     Float obtenerTotalVentaHoyPorUsuario(@Param("fechaHoy")Date fechaHoy, @Param("fechaManiana")Date fechaManiana, @Param("username")String username);
+
+    @Query("from Venta v where v.clienteCuentaCorriente is not null and v.clienteCuentaCorriente =:cliente and v.pagoCuentaCorriente is not null and v.fechaCancelacionCuentaCorriente is null")
+    public Iterable<Venta> mostrarVentasCuentasCorrientesImpagasPorCliente(@Param("cliente") Integer cliente);
 
 }

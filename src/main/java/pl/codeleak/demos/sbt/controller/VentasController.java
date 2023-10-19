@@ -83,11 +83,11 @@ public class VentasController {
 
         //fin nuevo filtro estadisticas por dia
 
-        model.addAttribute("ventasMontos", ventasRepository.mostrarVentasEstadisticas48hs(ayer));
+        //TODO: AGREGAR FECHAHOY FECHAMANIANA model.addAttribute("ventasMontos", ventasRepository.mostrarVentasEstadisticas48hs(ayer));
 
         model.addAttribute("estadisticasVentas", resultado);
 
-        model.addAttribute("ventasDigitales", ventasRepository.mostrarMontosDigitales48hs(ayer));
+        //TODO: AGREGAR FECHAHOY FECHAMANIANA model.addAttribute("ventasDigitales", ventasRepository.mostrarMontosDigitales48hs(ayer));
 
         model.addAttribute("salidasCaja", egresosCajaRepository.mostrarTodosLosEgresosSinRevisar());
 
@@ -190,11 +190,11 @@ public class VentasController {
 
         //fin nuevo filtro estadisticas por dia
 
-        model.addAttribute("ventasMontos", ventasRepository.mostrarVentasEstadisticas48hs(ayer));
+        //TODO: AGREGAR FECHAHOY FECHAMANIANA model.addAttribute("ventasMontos", ventasRepository.mostrarVentasEstadisticas48hs(ayer));
 
         model.addAttribute("estadisticasVentas", resultado);
 
-        model.addAttribute("ventasDigitales", ventasRepository.mostrarMontosDigitales48hs(ayer));
+        //TODO: AGREGAR FECHAHOY FECHAMANIANA model.addAttribute("ventasDigitales", ventasRepository.mostrarMontosDigitales48hs(ayer));
 
         model.addAttribute("salidasCaja", egresosCajaRepository.mostrarTodosLosEgresosSinRevisar());
 

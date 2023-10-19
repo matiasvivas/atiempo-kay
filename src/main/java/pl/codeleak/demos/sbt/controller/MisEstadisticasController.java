@@ -69,6 +69,10 @@ public class MisEstadisticasController {
 
         model.addAttribute("totalCajaFuerte", totalCajaFuerte);
 
+        model.addAttribute("ventasDigitales", ventasRepository.mostrarMontosDigitales48hs(fechaHoyCero,fechaManianaCero));
+        model.addAttribute("ventasMontos", ventasRepository.mostrarVentasEstadisticas48hs(fechaHoyCero,fechaManianaCero));
+
+
         return "ventas/ver_ventas";
     }
 
