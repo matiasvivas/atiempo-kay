@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,7 +55,7 @@ public class VentasController {
         }
         model.addAttribute("role", role);
 
-        Date hoy = new Date();
+        Date hoy = obtenerFechaYHoraActualDate();
         Date ayer = sumarRestarDiasFecha(hoy,-7);
         List<Venta> todasLasVentas = (List<Venta>)ventasRepository.mostrarVentas48hs(ayer);
         try {
@@ -160,7 +162,7 @@ public class VentasController {
         }
         model.addAttribute("role", role);
 
-        Date hoy = new Date();
+        Date hoy = obtenerFechaYHoraActualDate();
         Date ayer = sumarRestarDiasFecha(hoy,-1);
         List<Venta> todasLasVentas = (List<Venta>)ventasRepository.mostrarVentas48hs(ayer);
         try {
@@ -252,5 +254,11 @@ public class VentasController {
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
         calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
         return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
+    }
+
+    static Date obtenerFechaYHoraActualDate() {
+        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
+        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
+        return calendario.getTime();
     }
 }

@@ -18,6 +18,7 @@ import pl.codeleak.demos.sbt.service.UserService;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Controller
 @RequestMapping(path = "/ventas")
@@ -45,11 +46,10 @@ public class MisEstadisticasController {
         }
         model.addAttribute("role", role);
 
-        Date fechaHoy = new Date();
+        Date fechaHoy = obtenerFechaYHoraActualDate();
         Date fechaManiana = sumarRestarDiasFecha(fechaHoy,1);
         Date fechaHoyCero = this.cerificarFecha(fechaHoy);
         Date fechaManianaCero = this.cerificarFecha(fechaManiana);
-        //revisar
         Float totalEfectivoHoy = ventasRepository.mostrarTotalEfectivoHoy(fechaHoyCero, fechaManianaCero);
         Float totalEgresosHoy = egresosCajaRepository.mostrarTotalEgresosHoy(fechaHoyCero, fechaManianaCero);
         if(totalEfectivoHoy==null){totalEfectivoHoy = 0.0f;}
@@ -97,5 +97,11 @@ public class MisEstadisticasController {
         Date fechaConHoraCero = calendar.getTime();
 
         return fechaConHoraCero;
+    }
+
+    static Date obtenerFechaYHoraActualDate() {
+        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
+        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
+        return calendario.getTime();
     }
 }

@@ -2,6 +2,7 @@ package pl.codeleak.demos.sbt.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -86,7 +87,7 @@ public class IngresosCajaFuerteController {
             }
 
             CajaFuerte ingresoCajaFuerte = new CajaFuerte();
-            Date hoy = new Date();
+            Date hoy = obtenerFechaYHoraActualDate();
             ingresoCajaFuerte.setFechaIngreso(hoy);
             ingresoCajaFuerte.setMonto(totalCajaFuerte);
             ingresoCajaFuerte.setUsername(user.getUserName());
@@ -110,5 +111,11 @@ public class IngresosCajaFuerteController {
 
 
         return "ventas/ingresos-caja-fuerte";
+    }
+
+    static Date obtenerFechaYHoraActualDate() {
+        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
+        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
+        return calendario.getTime();
     }
 }

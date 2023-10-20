@@ -3,6 +3,7 @@ package pl.codeleak.demos.sbt.controller;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -47,7 +48,7 @@ public class EgresosCajaChicaController {
         }
         model.addAttribute("role", role);
 
-        Date hoy = new Date();
+        Date hoy = obtenerFechaYHoraActualDate();
         Date ayer = sumarRestarDiasFecha(hoy,-1);
         String today = "2022-05-30 00:00:00"; //Fecha de inicio de actividades
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
@@ -77,7 +78,7 @@ public class EgresosCajaChicaController {
             Float monto = Float.parseFloat(spliteado[0]);
             String motivo = spliteado[1];
             EgresosCaja egresosCaja = new EgresosCaja();
-            Date hoy = new Date();
+            Date hoy = obtenerFechaYHoraActualDate();
             egresosCaja.setFechaHoraEgreso(hoy);
             egresosCaja.setUsername(user.getUserName());
             egresosCaja.setMonto(monto);
@@ -96,6 +97,12 @@ public class EgresosCajaChicaController {
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
         calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
         return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
+    }
+
+    static Date obtenerFechaYHoraActualDate() {
+        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
+        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
+        return calendario.getTime();
     }
 
 }

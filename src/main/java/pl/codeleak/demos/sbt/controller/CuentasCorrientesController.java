@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -135,14 +136,14 @@ public class CuentasCorrientesController {
                     if (!resultado.get(i).getUsername().equals("SaldoAFavor")) {
                     if (resultado.get(i).getPagoCuentaCorriente() <= montoTemporal) {
                         Venta ventaTemporal = resultado.get(i);
-                        Date hoy = new Date();
+                        Date hoy = obtenerFechaYHoraActualDate();
                         ventaTemporal.setFechaCancelacionCuentaCorriente(hoy);
                         montoTemporal = montoTemporal - ventaTemporal.getPagoCuentaCorriente();
                         cuentasCorrientesRepository.save(ventaTemporal);
                     } else {
                         if (montoTemporal > 0) {
                             Venta ventaTemporal = resultado.get(i);
-                            Date hoy = new Date();
+                            Date hoy = obtenerFechaYHoraActualDate();
                             ventaTemporal.setFechaCancelacionCuentaCorriente(hoy);
                             Float saldoSinCancelarTemporal =
                                 ventaTemporal.getPagoCuentaCorriente() - montoTemporal;
@@ -160,7 +161,7 @@ public class CuentasCorrientesController {
                     }
                 }
                     else{
-                        Date hoy = new Date();
+                        Date hoy = obtenerFechaYHoraActualDate();
                         saldoAFavorAsiento.setFechaCancelacionCuentaCorriente(hoy);
                     }
                 }
@@ -168,7 +169,7 @@ public class CuentasCorrientesController {
             if(montoTemporal>0){
                 Venta asientoCancelacionDeuda = new Venta();
                 asientoCancelacionDeuda.setClienteCuentaCorriente(resultado.get(0).getClienteCuentaCorriente());
-                Date hoy = new Date();
+                Date hoy = obtenerFechaYHoraActualDate();
                 asientoCancelacionDeuda.setFechaYHora(hoy);//es para marcar la fecha de hoy
                 asientoCancelacionDeuda.setUsername("SaldoAFavor");
                 asientoCancelacionDeuda.setPagoCuentaCorriente(montoTemporal);
@@ -178,4 +179,9 @@ public class CuentasCorrientesController {
         return montoTemporal;
     }
 
+    static Date obtenerFechaYHoraActualDate() {
+        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
+        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
+        return calendario.getTime();
+    }
 }
