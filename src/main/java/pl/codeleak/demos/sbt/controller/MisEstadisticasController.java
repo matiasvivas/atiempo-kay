@@ -49,6 +49,7 @@ public class MisEstadisticasController {
         Date fechaManiana = sumarRestarDiasFecha(fechaHoy,1);
         Date fechaHoyCero = this.cerificarFecha(fechaHoy);
         Date fechaManianaCero = this.cerificarFecha(fechaManiana);
+        //revisar
         Float totalEfectivoHoy = ventasRepository.mostrarTotalEfectivoHoy(fechaHoyCero, fechaManianaCero);
         Float totalEgresosHoy = egresosCajaRepository.mostrarTotalEgresosHoy(fechaHoyCero, fechaManianaCero);
         if(totalEfectivoHoy==null){totalEfectivoHoy = 0.0f;}

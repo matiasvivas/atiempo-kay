@@ -39,6 +39,6 @@ public interface VentasRepository extends CrudRepository<Venta, Integer> {
     Float obtenerTotalVentaHoyPorUsuario(@Param("fechaHoy")Date fechaHoy, @Param("fechaManiana")Date fechaManiana, @Param("username")String username);
 
     @Query("from Venta v where v.clienteCuentaCorriente is not null and v.clienteCuentaCorriente =:cliente and v.pagoCuentaCorriente is not null and v.fechaCancelacionCuentaCorriente is null")
-    public Iterable<Venta> mostrarVentasCuentasCorrientesImpagasPorCliente(@Param("cliente") Integer cliente);
+    Iterable<Venta> mostrarVentasCuentasCorrientesImpagasPorCliente(@Param("cliente") Integer cliente);
 
 }
