@@ -93,6 +93,13 @@ public class LoginController {
             }
             modelAndView.addObject("role", role);
 
+            //corte para clientes externos:
+            if(role.equals("CLIENTECC")){
+                modelAndView.setViewName("principal");
+                return modelAndView;
+            }
+            //fin corte para clientes externos
+
             int diasDeAvisoAmarillo = 10;
             int diasDeAvisoRojo = 5;
             Date fechaHoy = new Date();

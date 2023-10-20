@@ -17,8 +17,10 @@
 package pl.codeleak.demos.sbt.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.TimeZone;
 
 class Utiles {
     static String obtenerFechaYHoraActualString() {
@@ -29,6 +31,8 @@ class Utiles {
     }
 
     static Date obtenerFechaYHoraActualDate() {
-     return new Date();
+        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
+        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
+        return calendario.getTime();
     }
 }
