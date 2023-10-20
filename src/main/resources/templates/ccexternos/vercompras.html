@@ -5,59 +5,118 @@
 <body style="padding-top: 0px;">
 <main layout:fragment="contenido">
     <div class="col-12">
-        <h2>Mis Clientes</h2>
+        <h2>Mis Compras</h2>
         <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
              th:text="${mensaje}"
              class="alert">
         </div>
-        <a class="btn btn-success mb-2" th:href="@{/clientes/agregar}">Agregar</a>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Numero Documento</th>
-                    <th>Telefono</th>
-                    <th>Cumpleaños</th>
-                    <th>Email</th>
-                    <th>Tiene Cta Cte</th>
-                    <th>Estado</th>
-                    <th>Activo</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="cliente : ${clientes}">
-                    <td th:text="${cliente.nombre}"></td>
-                    <td th:text="${cliente.apellido}"></td>
-                    <td th:text="${cliente.numeroDocumento}"></td>
-                    <td th:text="${cliente.telefono}"></td>
-                    <td th:text="${cliente.fechaCumpleanos}"></td>
-                    <td th:text="${cliente.email}"></td>
-                    <td th:if="${cliente.cuentaCorriente==true}">SI</td>
-                    <td th:if="${cliente.cuentaCorriente==false}">NO</td>
-                    <td th:if="${cliente.cuentaCorriente==null}">NO</td>
-                    <td th:text="${cliente.estado}"></td>
-                    <td th:if="${cliente.activo==true}">SI</td>
-                    <td th:if="${cliente.activo==false}">NO</td>
-                    <td th:if="${cliente.activo==null}">NO</td>
-                    <td>
-                        <a class="btn btn-warning" th:href="@{/clientes/editar/} + ${cliente.id}">Editar <i
-                                class="fa fa-edit"></i></a>
-                    </td>
-                    <td>
-                        <form th:action="@{/clientes/eliminar}" method="post">
-                            <input type="hidden" name="id" th:value="${cliente.id}"/>
-                            <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+
+
+        <script>
+
+            function verDetalles(boton){
+                var oculto = document.getElementById("verDetalles"+boton.id).hidden;
+                if(oculto==true){
+                    document.getElementById("verDetalles"+boton.id).hidden = false;
+                }
+                else{
+                    document.getElementById("verDetalles"+boton.id).hidden = true;
+                }
+            }
+
+            function calcularMontoAdeudado(){
+                var pagoPendiente = document.getElementsByClassName("pagoPendiente");
+                var total = 0;
+                for(i=0;i<pagoPendiente.length;i++)
+                {
+                    total = total+ parseFloat(pagoPendiente[i].innerHTML);
+                }
+                var porcentajeRecargo = document.getElementById("porcentajeRecargo").value;
+                var porcentajeDescuento = document.getElementById("porcentajeDescuento").value;
+
+                if(porcentajeRecargo!=null&&porcentajeRecargo!=''&&porcentajeRecargo!='undefined'&&porcentajeRecargo!=0){
+                    total = parseFloat(((total*porcentajeRecargo)/100)+total).toFixed();
+                    document.getElementById("totalDeuda").innerHTML="Total adeudado a hoy +"+porcentajeRecargo+"%: $"+total;
+                }
+                if(porcentajeDescuento!=null&&porcentajeDescuento!=''&&porcentajeDescuento!='undefined'&&porcentajeDescuento!=0){
+                    montoAD = parseFloat((total*porcentajeDescuento)/100).toFixed();
+                    total = parseFloat(total-montoAD).toFixed();
+                    document.getElementById("totalDeuda").innerHTML="Total adeudado a hoy -"+porcentajeDescuento+"%: $"+total;
+                }
+            }
+        </script>
+
+
+        <div th:id="52" class="tabcontent">
+            <h3>Mauri Godoy</h3>
+
+            <input hidden id="porcentajeRecargo" th:value="${porcentajeRecargo}"/>
+            <input hidden id="porcentajeDescuento" th:value="${porcentajeDescuento}"/>
+
+            <p>Detalle de cuenta corriente.</p>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Total pendiente</th>
+                        <th>Ver detalle</th>
+                        <th>Estado</th>
+                        <th>Usuario</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="venta : ${ventas}">
+                        <div>
+                            <td th:text="${venta.fechaYHora}"></td>
+                            <div th:if="${venta.fechaCancelacionCuentaCorriente==null && venta.username=='SaldoAFavor'}">
+                                <td th:text="${venta.pagoCuentaCorriente}"></td>
+                            </div>
+                            <div th:if="${venta.fechaCancelacionCuentaCorriente==null && venta.username!='SaldoAFavor'}">
+                                <td th:class="pagoPendiente" th:text="${venta.pagoCuentaCorriente}"></td>
+                            </div>
+                            <td><button th:id="${venta.id}" button type="button" onclick="verDetalles(this)" class="btn btn-default">Ver detalle</button></td>
+                            <td hidden th:id="'verDetalles'+${venta.id}">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Código de barras</th>
+                                        <th>Cantidad vendida</th>
+                                        <th>Precio</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="producto : ${venta.productos}">
+                                        <td th:text="${producto.nombre}"></td>
+                                        <td th:text="${producto.codigo}"></td>
+                                        <td th:text="${producto.cantidad}"></td>
+                                        <td th:text="${producto.precio}"></td>
+                                        <td th:text="${producto.total}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td th:if="${venta.fechaCancelacionCuentaCorriente!=null}">PAGADA</td>
+                            <td th:if="${venta.fechaCancelacionCuentaCorriente==null && venta.username!='SaldoAFavor'}">PENDIENTE</td>
+                            <td th:if="${venta.fechaCancelacionCuentaCorriente==null && venta.username=='SaldoAFavor'}">A FAVOR</td>
+                            <td th:text="${venta.username}"></td>
+                            </td>
+                        </div>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button onclick="calcularMontoAdeudado()" class="btn btn-success" >Calcular Deuda</button>
+            <div id="totalDeuda">Total:</div>
+
         </div>
+
+
+
     </div>
 </main>
 </body>

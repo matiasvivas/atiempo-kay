@@ -1,18 +1,12 @@
 package pl.codeleak.demos.sbt.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.codeleak.demos.sbt.enumeradores.TipoCodigo;
@@ -20,17 +14,27 @@ import pl.codeleak.demos.sbt.model.Cliente;
 import pl.codeleak.demos.sbt.model.Codigo;
 import pl.codeleak.demos.sbt.model.Role;
 import pl.codeleak.demos.sbt.model.User;
+import pl.codeleak.demos.sbt.repository.ClientesRepository;
 import pl.codeleak.demos.sbt.repository.CodigosRepository;
+import pl.codeleak.demos.sbt.repository.VentasRepository;
 import pl.codeleak.demos.sbt.service.UserService;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
-@RequestMapping(path = "/codigos")
-public class CodigosController {
+@RequestMapping(path = "/ccexternos")
+public class CCExternosController {
 
     @Autowired
     UserService userService;
     @Autowired
     CodigosRepository codigosRepository;
+    @Autowired
+    VentasRepository ventasRepository;
+    @Autowired
+    ClientesRepository clientesRepository;
 
     @GetMapping(value = "/")
     public ModelAndView cargadorInicial(Model model) {
@@ -155,5 +159,31 @@ public class CodigosController {
             .addFlashAttribute("mensaje", "Agregado correctamente")
             .addFlashAttribute("clase", "success");
         return "redirect:/codigos/agregar";
+    }
+
+    @GetMapping(value = "/compras")
+    public String mostrarCompras(Model model) {
+
+        Integer cliente = 52;
+        model.addAttribute("ventas", ventasRepository.mostrarVentasCuentasCorrientesImpagasPorCliente(cliente));
+
+        List<Cliente> clientesActivosYAprobados = clientesRepository.findClientesActivosYAprobadosCuentaCorrienteOrderByAZ();
+        if(clientesActivosYAprobados==null){clientesActivosYAprobados = new ArrayList<>();}
+        model.addAttribute("clientesCuentaCorriente", clientesActivosYAprobados);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        model.addAttribute("userName", user.getName() + " " + user.getLastName());
+
+        String role = "";
+        for (Role roleT : user.getRoles()){
+            role = roleT.getRole();
+        }
+        model.addAttribute("role", role);
+
+        model.addAttribute("porcentajeRecargo",10);
+        model.addAttribute("porcentajeDescuento",0);
+
+        return "ccexternos/vercompras";
     }
 }
