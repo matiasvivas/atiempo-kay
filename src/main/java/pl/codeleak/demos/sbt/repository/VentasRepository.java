@@ -13,6 +13,9 @@ public interface VentasRepository extends CrudRepository<Venta, Integer> {
     @Query("from Venta v where v.clienteCuentaCorriente is not null and v.pagoCuentaCorriente is not null and v.fechaCancelacionCuentaCorriente is null")
     public Iterable<Venta> mostrarVentasCuentasCorrientesImpagas();
 
+    @Query("from Venta v where v.clienteCuentaCorriente is not null and v.pagoCuentaCorriente is not null")
+    public Iterable<Venta> mostrarVentasCuentasCorrientesHistorial();
+
     @Query("SELECT DATE_TRUNC('day', v.fechaYHora) AS fechaYHora, v.username, SUM(CASE WHEN v.pagoEfectivo IS NOT NULL THEN v.pagoEfectivo ELSE 0 END) AS sum_pagoEfectivo, SUM(CASE WHEN v.pagoDigital IS NOT NULL THEN v.pagoDigital ELSE 0 END) AS sum_pagoDigital, SUM(CASE WHEN v.pagoCuentaCorriente IS NOT NULL THEN v.pagoCuentaCorriente ELSE 0 END) AS sum_pagoCuentaCorriente FROM Venta v WHERE v.username IS NOT NULL AND v.username NOT IN ('SaldoDeudor', 'SaldoAFavor') AND v.fechaYHora >= :today GROUP BY DATE_TRUNC('day', v.fechaYHora), v.username ORDER BY MAX(v.id) DESC")
     //@Query("select v.fechaYHora, v.username, coalesce(sum(v.pagoEfectivo),'0'), coalesce(sum(v.pagoDigital),'0'), coalesce(sum(v.pagoCuentaCorriente),'0') from Venta v where v.username is not null and v.username !='SaldoDeudor' and v.username !='SaldoAFavor' and v.fechaYHora >=:today group by DAYOFMONTH(v.fechaYHora),v.username order by v.id desc")
     List<Object> obtenerVentasPorCaja(@Param("today") Date today);

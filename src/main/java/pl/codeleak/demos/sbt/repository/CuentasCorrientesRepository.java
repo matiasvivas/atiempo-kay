@@ -10,10 +10,8 @@ import pl.codeleak.demos.sbt.model.Venta;
 
 @Service
 public interface CuentasCorrientesRepository extends CrudRepository<Venta, Integer> {
-
     @Query("from Venta v where v.clienteCuentaCorriente is not null and v.pagoCuentaCorriente is not null and v.fechaCancelacionCuentaCorriente is null and v.clienteCuentaCorriente =:cliente")
     List<Venta> obtenerDeudasDeCliente(@Param("cliente") Integer cliente);
-
     @Query("from Venta v where v.clienteCuentaCorriente is not null and v.pagoCuentaCorriente is not null and v.fechaCancelacionCuentaCorriente is null and v.clienteCuentaCorriente =:cliente and v.username='SaldoAFavor'")
     Venta obtenerSaldoAFavor(@Param("cliente") Integer cliente);
 

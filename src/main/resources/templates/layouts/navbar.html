@@ -41,6 +41,7 @@
                 <ul class="dropdown-menu" style="background-color: slategray;">
                     <li><a class="nav-link" style="color: white;" th:href="@{/cuentascorrientes/}">Ver Cuentas</a></li>
                     <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}" th:href="@{/cuentascorrientes/cancelar}">Cancelar Ctas Ctes</a></li>
+                    <li><a class="nav-link" style="color: white;" th:href="@{/historialcuentascorrientes/}">Historial Cuentas</a></li>
                 </ul>
             </li>
             <li class="dropdown" th:if="${role == 'VENDER' || role == 'VENDERPRO' || role == 'ADMIN'}">
