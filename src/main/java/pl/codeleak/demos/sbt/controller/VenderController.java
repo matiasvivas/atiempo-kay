@@ -295,9 +295,6 @@ public class VenderController {
             ProductoVendido productoVendido = new ProductoVendido(productoParaVender.getCantidad(), productoParaVender.getPrecio(), productoParaVender.getNombre(), productoParaVender.getCodigo(), v);
             // Y lo guardamos
             productosVendidosRepository.save(productoVendido);
-
-            Date ff = sumarRestarHorasFecha(this.obtenerFechaYHoraARGENTINA(),-3);
-            ventasRepository.updateFechaYHora(ff,v.getId());
         }
 
         // Al final limpiamos el carrito
@@ -970,18 +967,5 @@ public class VenderController {
             case "201020067689087990": resultado = true;
         }
         return resultado;
-    }
-
-    Date obtenerFechaYHoraARGENTINA() {
-        ZonedDateTime fechaHoraBuenosAires = ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
-        Date fechaYHora = Date.from(fechaHoraBuenosAires.toInstant());
-        return fechaYHora;
-    }
-
-    Date sumarRestarHorasFecha(Date fecha, int horas) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha); // Configuramos la fecha que se recibe
-        calendar.add(Calendar.HOUR_OF_DAY, horas);  // número de horas a añadir o restar
-        return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas o restadas
     }
 }
