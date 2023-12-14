@@ -1,6 +1,9 @@
 package pl.codeleak.demos.sbt.controller;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,13 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.codeleak.demos.sbt.model.Cliente;
-import pl.codeleak.demos.sbt.model.Producto;
-import pl.codeleak.demos.sbt.model.ProductoParaVender;
-import pl.codeleak.demos.sbt.model.ProductoVendido;
-import pl.codeleak.demos.sbt.model.Role;
-import pl.codeleak.demos.sbt.model.User;
-import pl.codeleak.demos.sbt.model.Venta;
+import pl.codeleak.demos.sbt.model.*;
 import pl.codeleak.demos.sbt.repository.ClientesRepository;
 import pl.codeleak.demos.sbt.repository.ProductosRepository;
 import pl.codeleak.demos.sbt.repository.ProductosVendidosRepository;
@@ -276,7 +273,9 @@ public class VenderController {
         if (carrito == null || carrito.size() <= 0) {
             return "redirect:/vender/";
         }
+        Date fechaHoy = this.obtenerFechaArgentina();
         Venta v = ventasRepository.save(new Venta());
+        v.setFechaYHora(fechaHoy);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
@@ -305,6 +304,12 @@ public class VenderController {
                 .addFlashAttribute("mensaje", "Venta realizada correctamente")
                 .addFlashAttribute("clase", "success");
         return "redirect:/vender/";
+    }
+
+    private Date obtenerFechaArgentina() {
+            ZonedDateTime fechaHoraBuenosAires = ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
+            Date fechaYHora = Date.from(fechaHoraBuenosAires.toInstant());
+            return fechaYHora;
     }
 
     @GetMapping(value = "/")
