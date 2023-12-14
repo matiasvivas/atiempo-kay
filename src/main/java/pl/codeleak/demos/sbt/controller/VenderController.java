@@ -274,8 +274,9 @@ public class VenderController {
             return "redirect:/vender/";
         }
         Date fechaHoy = this.obtenerFechaArgentina();
-        Venta v = ventasRepository.save(new Venta());
-        v.setFechaYHora(fechaHoy);
+        Venta vv = new Venta();
+        vv.setFechaYHora(fechaHoy);
+        Venta v = ventasRepository.save(vv);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
