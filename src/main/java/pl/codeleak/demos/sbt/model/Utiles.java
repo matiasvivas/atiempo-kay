@@ -18,6 +18,7 @@ package pl.codeleak.demos.sbt.model;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.TimeZone;
@@ -31,8 +32,13 @@ class Utiles {
     }
 
     static Date obtenerFechaYHoraActualDate() {
-        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
+        /*TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
         java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
-        return calendario.getTime();
+        return calendario.getTime();*/
+
+        ZonedDateTime fechaHoraBuenosAires = ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
+        Date fechaYHora = Date.from(fechaHoraBuenosAires.toInstant());
+        return fechaYHora;
+
     }
 }
