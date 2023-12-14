@@ -3,6 +3,7 @@ package pl.codeleak.demos.sbt.controller;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -295,7 +296,8 @@ public class VenderController {
             // Y lo guardamos
             productosVendidosRepository.save(productoVendido);
 
-            ventasRepository.updateFechaYHora(this.obtenerFechaYHoraARGENTINA(),v.getId());
+            Date ff = sumarRestarHorasFecha(this.obtenerFechaYHoraARGENTINA(),-3);
+            ventasRepository.updateFechaYHora(ff,v.getId());
         }
 
         // Al final limpiamos el carrito
@@ -974,5 +976,12 @@ public class VenderController {
         ZonedDateTime fechaHoraBuenosAires = ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
         Date fechaYHora = Date.from(fechaHoraBuenosAires.toInstant());
         return fechaYHora;
+    }
+
+    Date sumarRestarHorasFecha(Date fecha, int horas) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha); // Configuramos la fecha que se recibe
+        calendar.add(Calendar.HOUR_OF_DAY, horas);  // número de horas a añadir o restar
+        return calendar.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas o restadas
     }
 }
