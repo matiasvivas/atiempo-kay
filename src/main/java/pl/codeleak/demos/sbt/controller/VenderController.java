@@ -273,10 +273,8 @@ public class VenderController {
         if (carrito == null || carrito.size() <= 0) {
             return "redirect:/vender/";
         }
-        Date fechaHoy = this.obtenerFechaArgentina();
-        Venta vv = new Venta();
-        vv.setFechaYHora(fechaHoy);
-        Venta v = ventasRepository.save(vv);
+
+        Venta v = ventasRepository.save(new Venta());
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
@@ -296,6 +294,8 @@ public class VenderController {
             ProductoVendido productoVendido = new ProductoVendido(productoParaVender.getCantidad(), productoParaVender.getPrecio(), productoParaVender.getNombre(), productoParaVender.getCodigo(), v);
             // Y lo guardamos
             productosVendidosRepository.save(productoVendido);
+
+            ventasRepository.updateFechaYHora(this.obtenerFechaYHoraARGENTINA(),v.getId());
         }
 
         // Al final limpiamos el carrito
@@ -305,12 +305,6 @@ public class VenderController {
                 .addFlashAttribute("mensaje", "Venta realizada correctamente")
                 .addFlashAttribute("clase", "success");
         return "redirect:/vender/";
-    }
-
-    private Date obtenerFechaArgentina() {
-            ZonedDateTime fechaHoraBuenosAires = ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
-            Date fechaYHora = Date.from(fechaHoraBuenosAires.toInstant());
-            return fechaYHora;
     }
 
     @GetMapping(value = "/")
@@ -974,5 +968,11 @@ public class VenderController {
             case "201020067689087990": resultado = true;
         }
         return resultado;
+    }
+
+    Date obtenerFechaYHoraARGENTINA() {
+        ZonedDateTime fechaHoraBuenosAires = ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
+        Date fechaYHora = Date.from(fechaHoraBuenosAires.toInstant());
+        return fechaYHora;
     }
 }

@@ -3,9 +3,11 @@ package pl.codeleak.demos.sbt.repository;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import pl.codeleak.demos.sbt.model.Venta;
 
 public interface VentasRepository extends CrudRepository<Venta, Integer> {
@@ -43,5 +45,10 @@ public interface VentasRepository extends CrudRepository<Venta, Integer> {
 
     @Query("from Venta v where v.clienteCuentaCorriente is not null and v.clienteCuentaCorriente =:cliente and v.pagoCuentaCorriente is not null and v.fechaCancelacionCuentaCorriente is null")
     Iterable<Venta> mostrarVentasCuentasCorrientesImpagasPorCliente(@Param("cliente") Integer cliente);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Venta set fechaYHora =:fechaHoy where id =:id", nativeQuery = true)
+    void updateFechaYHora(@Param("fechaHoy")Date fechaHoy, @Param("id") Integer id);
 
 }
