@@ -15,7 +15,7 @@
                 <ul class="dropdown-menu" style="background-color: slategray;">
                     <li><a class="nav-link" style="color: white;" th:href="@{/vender/}">Vender</a></li>
                     <li><a class="nav-link" style="color: white;" th:href="@{/ventaspublico/}">Mis Ventas</a></li>
-                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}">Ver Ventas Historicas</a></li>
+                    <li><a class="nav-link" style="color: white;" th:if="${role == 'ADMIN'}" th:href="@{/ventaspublicohistorico/}">Ver Ventas Historicas</a></li>
                 </ul>
             </li>
             <li class="dropdown" th:if="${role == 'VENDER' || role == 'VENDERPRO' || role == 'ADMIN'}">

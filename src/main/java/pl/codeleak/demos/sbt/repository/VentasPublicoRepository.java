@@ -9,5 +9,8 @@ import java.util.Date;
 
 public interface VentasPublicoRepository extends CrudRepository<Venta, Integer> {
     @Query("from Venta v where v.fechaYHora >=:today and v.username =:username")
-    public Iterable<Venta> mostrarVentasDeHoy(@Param("today") Date today, @Param("username") String username);
+    Iterable<Venta> mostrarVentasDeHoy(@Param("today") Date today, @Param("username") String username);
+
+    @Query("from Venta v where v.fechaYHora >=:today")
+    Iterable<Venta> mostrarVentasDeHoyHistorico(@Param("today") Date today);
 }
