@@ -20,7 +20,9 @@ public class EgresosCaja {
     private Date fechaHoraEgreso;
     private String username;
 
-    public EgresosCaja (){}
+    public EgresosCaja (){
+        this.fechaHoraEgreso = Utiles.obtenerFechaYHoraActualDate();
+    }
 
     public EgresosCaja(Integer id, Float monto, String motivo, boolean esCajaFuerte, boolean revisado,
                        Date fechaHoraEgreso,

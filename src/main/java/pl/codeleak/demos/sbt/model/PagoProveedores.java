@@ -31,6 +31,7 @@ public class PagoProveedores {
     private Date fecha;
 
     public PagoProveedores() {
+        this.fecha = Utiles.obtenerFechaYHoraActualDate();
     }
 
     public PagoProveedores(Integer id, String proveedor, Float montoPedido, Float montoSaldoPendiente,

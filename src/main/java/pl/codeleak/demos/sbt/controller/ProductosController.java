@@ -21,6 +21,7 @@ import pl.codeleak.demos.sbt.enumeradores.Categoria;
 import pl.codeleak.demos.sbt.model.Producto;
 import pl.codeleak.demos.sbt.model.Role;
 import pl.codeleak.demos.sbt.model.User;
+import pl.codeleak.demos.sbt.model.Utiles;
 import pl.codeleak.demos.sbt.repository.ProductosRepository;
 import pl.codeleak.demos.sbt.service.UserService;
 
@@ -113,13 +114,13 @@ public class ProductosController {
         producto.setUsuarioActualizacionStock(posibleProductoExistente.getUsuarioActualizacionStock());
 
         if(modificacionDeStock(posibleProductoExistente.getExistencia(),producto.getExistencia())){
-            producto.setFechaActualizacionStock(getCurrentUtcTime());
+            producto.setFechaActualizacionStock(Utiles.obtenerFechaYHoraActualDate());
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userService.findUserByUserName(auth.getName());
             producto.setUsuarioActualizacionStock(user.getUserName());
         }
         if(modificacionDePrecio(posibleProductoExistente.getPrecio(),producto.getPrecio())){
-            producto.setFechaActualizacionPrecio(getCurrentUtcTime());
+            producto.setFechaActualizacionPrecio(Utiles.obtenerFechaYHoraActualDate());
         }
 
         productosRepository.save(producto);
@@ -162,9 +163,9 @@ public class ProductosController {
         }
 
         //Se adjunta la fecha de creacion y de usuario que define el stock
-        producto.setFechaCreacion(getCurrentUtcTime());
-        producto.setFechaActualizacionStock(getCurrentUtcTime());
-        producto.setFechaActualizacionPrecio(getCurrentUtcTime());
+        producto.setFechaCreacion(Utiles.obtenerFechaYHoraActualDate());
+        producto.setFechaActualizacionStock(Utiles.obtenerFechaYHoraActualDate());
+        producto.setFechaActualizacionPrecio(Utiles.obtenerFechaYHoraActualDate());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         producto.setUsuarioActualizacionStock(user.getUserName());
@@ -192,13 +193,5 @@ public class ProductosController {
             return true;
         }
         else {return false;}
-    }
-
-    public static Date getCurrentUtcTime(){  // handling ParseException
-        Date hoy = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(hoy); // Configuramos la fecha que se recibe
-        calendar.add(Calendar.HOUR, -3);  // numero de horas a añadir, o restar en caso de horas<0
-        return calendar.getTime(); // Dev
     }
 }

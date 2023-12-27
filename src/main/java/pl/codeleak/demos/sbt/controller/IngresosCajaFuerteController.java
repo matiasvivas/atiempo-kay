@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.codeleak.demos.sbt.model.CajaFuerte;
 import pl.codeleak.demos.sbt.model.Role;
 import pl.codeleak.demos.sbt.model.User;
+import pl.codeleak.demos.sbt.model.Utiles;
 import pl.codeleak.demos.sbt.repository.IngresosCajaFuerteRepository;
 import pl.codeleak.demos.sbt.service.UserService;
 
@@ -87,7 +88,7 @@ public class IngresosCajaFuerteController {
             }
 
             CajaFuerte ingresoCajaFuerte = new CajaFuerte();
-            Date hoy = obtenerFechaYHoraActualDate();
+            Date hoy = Utiles.obtenerFechaYHoraActualDate();
             ingresoCajaFuerte.setFechaIngreso(hoy);
             ingresoCajaFuerte.setMonto(totalCajaFuerte);
             ingresoCajaFuerte.setUsername(user.getUserName());
@@ -113,9 +114,4 @@ public class IngresosCajaFuerteController {
         return "ventas/ingresos-caja-fuerte";
     }
 
-    static Date obtenerFechaYHoraActualDate() {
-        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
-        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
-        return calendario.getTime();
-    }
 }

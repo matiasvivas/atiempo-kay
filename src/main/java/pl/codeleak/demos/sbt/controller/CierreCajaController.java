@@ -11,10 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.codeleak.demos.sbt.model.CajaFuerte;
-import pl.codeleak.demos.sbt.model.CierreCaja;
-import pl.codeleak.demos.sbt.model.Role;
-import pl.codeleak.demos.sbt.model.User;
+import pl.codeleak.demos.sbt.model.*;
 import pl.codeleak.demos.sbt.repository.CierreCajaRepository;
 import pl.codeleak.demos.sbt.repository.IngresosCajaFuerteRepository;
 import pl.codeleak.demos.sbt.repository.VentasRepository;
@@ -53,7 +50,7 @@ public class CierreCajaController {
         model.addAttribute("role", role);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        Date hoy= obtenerFechaYHoraActualDate();
+        Date hoy= Utiles.obtenerFechaYHoraActualDate();
         String timestamp = sdf.format(hoy);
         cierreCaja.setFechaYHora(timestamp);
         cierreCaja.setUsername(user.getUserName());
@@ -78,7 +75,7 @@ public class CierreCajaController {
         totalCajaFuerte = totalCajaFuerte+montoCierreCajaRequest;
         CajaFuerte updateCajaFuerte = new CajaFuerte();
         if((cajaFuerte.size()>0)&&(cajaFuerte!=null)){updateCajaFuerte=cajaFuerte.get(0);}
-        updateCajaFuerte.setFechaEgreso(obtenerFechaYHoraActualDate());
+        updateCajaFuerte.setFechaEgreso(Utiles.obtenerFechaYHoraActualDate());
         updateCajaFuerte.setFechaEgreso(hoy);
         updateCajaFuerte.setUsername("IngresoCajaSistema");
         updateCajaFuerte.setMotivo("Ingreso a caja fuerte por Cierre de Caja de usuario: "+cierreCaja.getUsername()+ " por un monto sin apertura de: "+montoCierreCajaRequest+" con fecha: "+cierreCaja.getFechaYHora());
@@ -141,7 +138,7 @@ public class CierreCajaController {
 
         model.addAttribute("cierreCaja",ultimos6CierreCaja);
 
-        Date hoy = obtenerFechaYHoraActualDate();
+        Date hoy = Utiles.obtenerFechaYHoraActualDate();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
         Date ayer = sumarRestarDiasFecha(hoy,-7);
         List<Object> ventasPorCajas = ventasRepository.obtenerVentasPorCaja(ayer);
@@ -176,11 +173,5 @@ public class CierreCajaController {
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
         calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
         return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
-    }
-
-    static Date obtenerFechaYHoraActualDate() {
-        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
-        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
-        return calendario.getTime();
     }
 }

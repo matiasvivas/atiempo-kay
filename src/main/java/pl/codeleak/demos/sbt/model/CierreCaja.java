@@ -25,8 +25,7 @@ public class CierreCaja {
 
     private String fechaYHora;
 
-    public CierreCaja() {
-    }
+    public CierreCaja() {}
 
     public CierreCaja(Integer id, String username, Float monto, String fechaYHora) {
         this.id = id;

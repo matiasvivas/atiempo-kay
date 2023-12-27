@@ -28,7 +28,9 @@ public class Cliente {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaCumpleanos;
     private String email;
-    public Cliente(){}
+    public Cliente(){
+        this.fechaCarga=Utiles.obtenerFechaYHoraActualDate();
+    }
 
     public Cliente(Integer id, String nombre, String apellido, String numeroDocumento, String telefono,
                    Boolean cuentaCorriente, Estado estado, Boolean activo, Date fechaCarga, String username,

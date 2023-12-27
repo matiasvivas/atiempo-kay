@@ -23,7 +23,9 @@ public class Proveedor {
     private Date fechaCarga;
     private String username;
 
-    public Proveedor(){}
+    public Proveedor(){
+        this.fechaCarga = Utiles.obtenerFechaYHoraActualDate();
+    }
     public Proveedor(Integer id, String nombre, String telefono, Categoria categoria, Boolean activo, Date fechaCarga,
                      String username) {
         this.id = id;

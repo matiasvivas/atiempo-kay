@@ -46,7 +46,7 @@ public class MisEstadisticasController {
         }
         model.addAttribute("role", role);
 
-        Date fechaHoy = obtenerFechaYHoraActualDate();
+        Date fechaHoy = Utiles.obtenerFechaYHoraActualDate();
         Date fechaManiana = sumarRestarDiasFecha(fechaHoy,1);
         Date fechaHoyCero = this.cerificarFecha(fechaHoy);
         Date fechaManianaCero = this.cerificarFecha(fechaManiana);
@@ -97,11 +97,5 @@ public class MisEstadisticasController {
         Date fechaConHoraCero = calendar.getTime();
 
         return fechaConHoraCero;
-    }
-
-    static Date obtenerFechaYHoraActualDate() {
-        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
-        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
-        return calendario.getTime();
     }
 }

@@ -23,22 +23,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.TimeZone;
 
-class Utiles {
-    static String obtenerFechaYHoraActualString() {
-        String formato = "yyyy-MM-dd HH:mm:ss";
-        DateTimeFormatter formateador = DateTimeFormatter.ofPattern(formato);
-        LocalDateTime ahora = LocalDateTime.now();
-        return formateador.format(ahora);
-    }
-
-    static Date obtenerFechaYHoraActualDate() {
-        /*TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
+public class Utiles {
+    public static Date obtenerFechaYHoraActualDate() {
+        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
         java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
-        return calendario.getTime();*/
-
-        ZonedDateTime fechaHoraBuenosAires = ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"));
-        Date fechaYHora = Date.from(fechaHoraBuenosAires.toInstant());
-        return fechaYHora;
-
+        return calendario.getTime();
     }
 }

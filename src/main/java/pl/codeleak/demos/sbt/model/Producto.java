@@ -77,6 +77,7 @@ public class Producto {
     }
 
     public Producto() {
+        this.fechaCreacion = Utiles.obtenerFechaYHoraActualDate();
     }
 
     public boolean sinExistencia() {

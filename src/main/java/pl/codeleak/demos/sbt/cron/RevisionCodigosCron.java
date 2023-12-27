@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.codeleak.demos.sbt.model.Codigo;
 import pl.codeleak.demos.sbt.model.User;
+import pl.codeleak.demos.sbt.model.Utiles;
 import pl.codeleak.demos.sbt.repository.CodigosRepository;
 import pl.codeleak.demos.sbt.repository.UserRepository;
 
@@ -26,7 +27,7 @@ public class RevisionCodigosCron {
 
         @Scheduled(cron="* * 6 * * *")
         public void doSomething() {
-            System.out.println("Revisión 6am códigos días restantes: "+dateFormat.format(obtenerFechaYHoraActualDate()));
+            System.out.println("Revisión 6am códigos días restantes: "+dateFormat.format(Utiles.obtenerFechaYHoraActualDate()));
             List<Codigo> codigosActivacionVigentes = codigosRepository.obtenerCodigosActivacionVigentes();
             for(Codigo codigo:codigosActivacionVigentes){
                 codigosRepository.restar1diaCodigosActivacion(codigo.getDiasRestantes()-1,codigo.getId());
@@ -41,7 +42,7 @@ public class RevisionCodigosCron {
 
     @Scheduled(cron="* * * 1 * *")
     public void cleanOldCodes() {
-        System.out.println("Eliminación de códigos antiguos de Activación: "+dateFormat.format(obtenerFechaYHoraActualDate()));
+        System.out.println("Eliminación de códigos antiguos de Activación: "+dateFormat.format(Utiles.obtenerFechaYHoraActualDate()));
         List<Codigo> codigosActivacionAntiguosYaUtilizados = codigosRepository.obtenerCodigosDeActivacionYaUtilizados();
         for(Codigo codigo:codigosActivacionAntiguosYaUtilizados){
             codigosRepository.delete(codigo);
@@ -52,9 +53,4 @@ public class RevisionCodigosCron {
         }
     }
 
-    static Date obtenerFechaYHoraActualDate() {
-        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
-        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
-        return calendario.getTime();
-    }
 }

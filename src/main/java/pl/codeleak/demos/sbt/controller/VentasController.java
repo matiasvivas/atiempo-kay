@@ -14,12 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.codeleak.demos.sbt.model.CajaFuerte;
-import pl.codeleak.demos.sbt.model.EgresosCaja;
-import pl.codeleak.demos.sbt.model.PagoProveedores;
-import pl.codeleak.demos.sbt.model.Role;
-import pl.codeleak.demos.sbt.model.User;
-import pl.codeleak.demos.sbt.model.Venta;
+import pl.codeleak.demos.sbt.model.*;
 import pl.codeleak.demos.sbt.repository.EgresosCajaRepository;
 import pl.codeleak.demos.sbt.repository.IngresosCajaFuerteRepository;
 import pl.codeleak.demos.sbt.repository.PagoProveedoresRepository;
@@ -55,7 +50,7 @@ public class VentasController {
         }
         model.addAttribute("role", role);
 
-        Date hoy = obtenerFechaYHoraActualDate();
+        Date hoy = Utiles.obtenerFechaYHoraActualDate();
         Date ayer = sumarRestarDiasFecha(hoy,-7);
         List<Venta> todasLasVentas = (List<Venta>)ventasRepository.mostrarVentas48hs(ayer);
         try {
@@ -162,7 +157,7 @@ public class VentasController {
         }
         model.addAttribute("role", role);
 
-        Date hoy = obtenerFechaYHoraActualDate();
+        Date hoy = Utiles.obtenerFechaYHoraActualDate();
         Date ayer = sumarRestarDiasFecha(hoy,-1);
         List<Venta> todasLasVentas = (List<Venta>)ventasRepository.mostrarVentas48hs(ayer);
         try {
@@ -254,11 +249,5 @@ public class VentasController {
         calendar.setTime(fecha); // Configuramos la fecha que se recibe
         calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
         return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
-    }
-
-    static Date obtenerFechaYHoraActualDate() {
-        TimeZone zonaArgentina = TimeZone.getTimeZone("America/Argentina/Buenos_Aires");
-        java.util.Calendar calendario = java.util.Calendar.getInstance(zonaArgentina);
-        return calendario.getTime();
     }
 }

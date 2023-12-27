@@ -22,6 +22,10 @@
                     <th>Código</th>
                     <th>Precio</th>
                     <th>Existencia</th>
+                    <th>F Creacion</th>
+                    <th>F Stock</th>
+                    <th>F Precio</th>
+                    <th>Usuario S</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -33,6 +37,11 @@
                     <td th:text="${producto.precio}"></td>
                     <td th:if="${producto.existencia==0.0}" style="color:red;" th:text="${producto.existencia}"></td>
                     <td th:if="${producto.existencia!=0.0}" th:text="${producto.existencia}"></td>
+
+                    <td th:text="${producto.fechaCreacion}"></td>
+                    <td th:text="${producto.fechaActualizacionStock}"></td>
+                    <td th:text="${producto.fechaActualizacionPrecio}"></td>
+                    <td th:text="${producto.usuarioActualizacionStock}"></td>
                     <td>
                         <a class="btn btn-warning" th:href="@{/productos/editar/} + ${producto.id}">Editar <i
                                 class="fa fa-edit"></i></a>
