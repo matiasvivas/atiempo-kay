@@ -25,6 +25,8 @@ public class Cliente {
     private Boolean activo;
     private Date fechaCarga;
     private String username;
+
+    private String passwordMobile;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaCumpleanos;
     private String email;
@@ -34,7 +36,7 @@ public class Cliente {
 
     public Cliente(Integer id, String nombre, String apellido, String numeroDocumento, String telefono,
                    Boolean cuentaCorriente, Estado estado, Boolean activo, Date fechaCarga, String username,
-                   Date fechaCumpleanos, String email) {
+                   Date fechaCumpleanos, String email, String passwordMobile) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -47,6 +49,7 @@ public class Cliente {
         this.username = username;
         this.fechaCumpleanos = fechaCumpleanos;
         this.email = email;
+        this.passwordMobile = passwordMobile;
     }
 
     public Integer getId() {
@@ -143,5 +146,13 @@ public class Cliente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPasswordMobile() {
+        return passwordMobile;
+    }
+
+    public void setPasswordMobile(String passwordMobile) {
+        this.passwordMobile = passwordMobile;
     }
 }

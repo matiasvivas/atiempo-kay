@@ -23,6 +23,8 @@ public class LoginRest {
 
         if(usR!=null) {
             respuesta.put("usuario", usR.getAcceso());
+            respuesta.put("nombre",usR.getNombre());
+            respuesta.put("ctacte",usR.getCtacte());
             return new ResponseEntity<>(respuesta, HttpStatus.OK);
         }
         else{

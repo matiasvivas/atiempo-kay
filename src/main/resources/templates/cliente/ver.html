@@ -24,6 +24,7 @@
                     <th>Tiene Cta Cte</th>
                     <th>Estado</th>
                     <th>Activo</th>
+                    <th>Password Mobile</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -43,6 +44,9 @@
                     <td th:if="${cliente.activo==true}">SI</td>
                     <td th:if="${cliente.activo==false}">NO</td>
                     <td th:if="${cliente.activo==null}">NO</td>
+
+                    <td th:text="${cliente.passwordMobile}"></td>
+
                     <td>
                         <a class="btn btn-warning" th:href="@{/clientes/editar/} + ${cliente.id}">Editar <i
                                 class="fa fa-edit"></i></a>
