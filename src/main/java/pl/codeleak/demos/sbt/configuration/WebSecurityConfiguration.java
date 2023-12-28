@@ -1,6 +1,7 @@
 package pl.codeleak.demos.sbt.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import pl.codeleak.demos.sbt.service.MyUserDetailsService;
 
 @Configuration
@@ -36,8 +40,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         String loginPage = "/login";
         String logoutPage = "/logout";
 
-        http.
-                authorizeRequests()
+        http.cors().and()
+                .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(loginPage).permitAll()
                 .antMatchers("/registration").permitAll()
@@ -69,6 +73,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("http://localhost:8100"); // Permite solicitudes desde este origen
+        config.addAllowedMethod("*"); // Permite todos los métodos
+        config.addAllowedHeader("*"); // Permite todos los encabezados
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 
 }
