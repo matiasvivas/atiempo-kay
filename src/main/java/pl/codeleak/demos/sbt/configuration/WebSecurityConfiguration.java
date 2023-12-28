@@ -79,7 +79,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:8100"); // Permite solicitudes desde este origen
+        config.addAllowedOrigin("*"); // Permite solicitudes desde este origen
         config.addAllowedMethod("*"); // Permite todos los métodos
         config.addAllowedHeader("*"); // Permite todos los encabezados
         source.registerCorsConfiguration("/**", config);
