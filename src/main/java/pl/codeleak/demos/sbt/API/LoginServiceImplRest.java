@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.codeleak.demos.sbt.enumeradores.Estado;
 import pl.codeleak.demos.sbt.model.Cliente;
+import pl.codeleak.demos.sbt.model.ProductoVendido;
 import pl.codeleak.demos.sbt.model.Venta;
 import pl.codeleak.demos.sbt.repository.ClientesRepository;
 import pl.codeleak.demos.sbt.repository.CuentasCorrientesRepository;
@@ -11,6 +12,7 @@ import pl.codeleak.demos.sbt.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -54,7 +56,14 @@ public class LoginServiceImplRest implements LoginServiceRest{
         for(Venta venta:ctacte){
             VentaResponse ventaResponse = new VentaResponse();
             ventaResponse.setFechaHora(venta.getFechaYHora());
-            ventaResponse.setDetalle("Detalle ejemplo");
+            // Acceder a la lista de productos vendidos dentro de cada venta
+            Set<ProductoVendido> productosVendidos = venta.getProductos();
+
+            String detalle = "";
+            for(ProductoVendido pv:productosVendidos){
+                detalle+= pv.getNombre()+" - ";
+            }
+            ventaResponse.setDetalle(detalle);
             ventaResponse.setMontoPendiente(venta.getPagoCuentaCorriente());
             ctacteResponse.add(ventaResponse);
         }
