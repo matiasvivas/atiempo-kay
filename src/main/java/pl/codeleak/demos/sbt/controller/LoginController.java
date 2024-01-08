@@ -57,6 +57,15 @@ public class LoginController {
         return modelAndView;
     }
 
+    @GetMapping(value="/politicas")
+    public ModelAndView politicas(){
+        ModelAndView modelAndView = new ModelAndView();
+        User user = new User();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("politicas");
+        return modelAndView;
+    }
+
     @PostMapping(value = "/registration")
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
