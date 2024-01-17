@@ -8,12 +8,14 @@ public class UsuarioResponse {
     private boolean acceso;
     private String nombre;
     private List<VentaResponse> ctacte;
-    public UsuarioResponse(){}
 
-    public UsuarioResponse(boolean acceso, String nombre, List<VentaResponse> ctacte) {
+    private List<ProductoResponse> productosPriv;
+    public UsuarioResponse(){}
+    public UsuarioResponse(boolean acceso, String nombre, List<VentaResponse> ctacte, List<ProductoResponse> productosPriv) {
         this.acceso = acceso;
         this.nombre = nombre;
         this.ctacte = ctacte;
+        this.productosPriv = productosPriv;
     }
     public boolean getAcceso() {
         return acceso;
@@ -37,5 +39,13 @@ public class UsuarioResponse {
 
     public void setCtacte(List<VentaResponse> ctacte) {
         this.ctacte = ctacte;
+    }
+
+    public List<ProductoResponse> getProductosPriv() {
+        return productosPriv;
+    }
+
+    public void setProductosPriv(List<ProductoResponse> productosPriv) {
+        this.productosPriv = productosPriv;
     }
 }

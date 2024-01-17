@@ -35,4 +35,6 @@ public interface ProductosRepository extends CrudRepository<Producto, Integer> {
     @Query("from Producto p where p.existencia >0 order by p.nombre")
     List<Producto> obtenerProductosVendibles();
     Producto findFirstById(int codigo);
+    @Query("from Producto p order by p.nombre")
+    List<Producto> obtenerProductosPrivadosMobile();
 }

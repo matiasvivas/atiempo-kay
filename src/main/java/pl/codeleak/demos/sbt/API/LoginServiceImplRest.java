@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.codeleak.demos.sbt.enumeradores.Estado;
 import pl.codeleak.demos.sbt.model.Cliente;
+import pl.codeleak.demos.sbt.model.Producto;
 import pl.codeleak.demos.sbt.model.ProductoVendido;
 import pl.codeleak.demos.sbt.model.Venta;
 import pl.codeleak.demos.sbt.repository.ClientesRepository;
 import pl.codeleak.demos.sbt.repository.CuentasCorrientesRepository;
+import pl.codeleak.demos.sbt.repository.ProductosRepository;
 import pl.codeleak.demos.sbt.service.UserService;
 
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ public class LoginServiceImplRest implements LoginServiceRest{
 
     @Autowired
     private CuentasCorrientesRepository cuentasCorrientesRepository;
+
+    @Autowired
+    private ProductosRepository productosRepository;
 
     public UsuarioResponse validarCredenciales(UsuarioRequest usuarioRequest)  {
         UsuarioResponse usuarioResponse = new UsuarioResponse();
@@ -40,6 +45,15 @@ public class LoginServiceImplRest implements LoginServiceRest{
                 else{
                     usuarioResponse.setCtacte(null);
                 }
+                //productos privados
+                if(cliente.getNumeroDocumento().equals("35441563")||cliente.getNumeroDocumento().equals("40406688")){
+                    List<Producto> productosP = productosRepository.obtenerProductosPrivadosMobile();
+                    List<ProductoResponse> productosPrivadosConvertidos = convertirProductosMobile(productosP);
+                    usuarioResponse.setProductosPriv(productosPrivadosConvertidos);
+                }
+                else{
+                    usuarioResponse.setProductosPriv(null);
+                }
             }
             else {
                 usuarioResponse.setAcceso(false);
@@ -49,6 +63,19 @@ public class LoginServiceImplRest implements LoginServiceRest{
             usuarioResponse.setAcceso(false);
         }
         return usuarioResponse;
+    }
+
+    private List<ProductoResponse> convertirProductosMobile(List<Producto> productosP) {
+        List<ProductoResponse> productosPResponse = new ArrayList<>();
+        for(Producto producto:productosP){
+            ProductoResponse productoResponse = new ProductoResponse();
+            productoResponse.setCodigo(producto.getCodigo());
+            productoResponse.setPrecio(producto.getPrecio());
+            productoResponse.setStock(producto.getExistencia());
+            productoResponse.setNombre(producto.getNombre());
+            productosPResponse.add(productoResponse);
+        }
+        return productosPResponse;
     }
 
     private List<VentaResponse> convertirDeudaMobile(List<Venta> ctacte) {
