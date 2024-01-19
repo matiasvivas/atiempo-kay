@@ -2,6 +2,7 @@ package pl.codeleak.demos.sbt.API;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.codeleak.demos.sbt.APIToken.TokenGenerator;
 import pl.codeleak.demos.sbt.enumeradores.Estado;
 import pl.codeleak.demos.sbt.model.Cliente;
 import pl.codeleak.demos.sbt.model.Producto;
@@ -50,6 +51,8 @@ public class LoginServiceImplRest implements LoginServiceRest{
                     List<Producto> productosP = productosRepository.obtenerProductosPrivadosMobile();
                     List<ProductoResponse> productosPrivadosConvertidos = convertirProductosMobile(productosP);
                     usuarioResponse.setProductosPriv(productosPrivadosConvertidos);
+                    //se agrega el token para validar los update
+                    usuarioResponse.setToken(generarToken(cliente.getNumeroDocumento()));
                 }
                 else{
                     usuarioResponse.setProductosPriv(null);
@@ -63,6 +66,13 @@ public class LoginServiceImplRest implements LoginServiceRest{
             usuarioResponse.setAcceso(false);
         }
         return usuarioResponse;
+    }
+
+    private String generarToken(String s) {
+        String secretKey = s+"kayadmin";
+        TokenGenerator tokenGenerator = new TokenGenerator(secretKey);
+        String generatedToken = tokenGenerator.generateToken();
+        return generatedToken;
     }
 
     private List<ProductoResponse> convertirProductosMobile(List<Producto> productosP) {
